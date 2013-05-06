@@ -1,0 +1,141 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            .box1 {
+background: rgb(237,144,23); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(237,144,23,1) 0%, rgba(246,230,180,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(237,144,23,1)), color-stop(100%,rgba(246,230,180,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(237,144,23,1) 0%,rgba(246,230,180,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(237,144,23,1) 0%,rgba(246,230,180,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(237,144,23,1) 0%,rgba(246,230,180,1) 100%); /* IE10+ */
+background: linear-gradient(top,  rgba(237,144,23,1) 0%,rgba(246,230,180,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ed9017', endColorstr='#f6e6b4',GradientType=0 ); /* IE6-9 */
+}
+.box2 {
+background: rgb(246,230,180); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(246,230,180,1) 0%, rgba(237,144,23,1) 100%);/* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(246,230,180,1)), color-stop(100%,rgba(237,144,23,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(246,230,180,1) 0%,rgba(237,144,23,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(246,230,180,1) 0%,rgba(237,144,23,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(246,230,180,1) 0%,rgba(237,144,23,1) 100%); /* IE10+ */
+background: linear-gradient(top,  rgba(246,230,180,1) 0%,rgba(237,144,23,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6e6b4', endColorstr='#ed9017',GradientType=0 ); /* IE6-9 */
+}
+            
+        </style>
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+        <script>
+            
+
+/*!
+* jQuery linear gradient effect plug-in.
+* Requires jQuery UI.
+* http://norimek.com/blog/page/jQuery-Plug-Ins.aspx
+*
+* Copyright 2011, Robert C. Barth
+* Licensed under the MIT license.
+* http://www.opensource.org/licenses/MIT
+*
+* Date: Sat Aug 27 13:00:00 2011 -0700
+*/
+(function($, undefined) {
+
+$.effects.lineargradient = function(o) {
+
+	return this.queue(function() {
+		
+		var $this = $(this), 
+			props = [ 'background-image' ],
+			times = o.options.times || 1,
+			duration = o.duration || 1000,
+			angle = o.options.angle || 0,
+			stops = o.options.stops;
+		
+		$.effects.save($this, props);
+		$this.css('percent', 0);
+		
+		for (var i = 0; i < times; i++) {
+			
+			$this.animate({ percent: 125 }, {
+				queue: false,
+				duration: duration,
+				easing: o.options.easing,
+				step: function(now, fx) {
+					
+					var gradientSpecifier = [ angle.toString() + 'deg, ' ]
+
+					for (var ii = 0, l = stops.length; ii < l; ii++) {
+						
+						if ($.isArray(stops[ii])) {
+							// Color
+							gradientSpecifier.push(stops[ii][0].toString() + ' ');
+							// Position
+							gradientSpecifier.push(String(now + stops[ii][1]) + '%');
+						} else {
+							// Color only
+							gradientSpecifier.push(stops[ii].toString());
+						}
+						
+						if (ii < l - 1) {
+							gradientSpecifier.push(', ');
+						}
+					}
+					
+					gradientSpecifier = gradientSpecifier.join('');
+					
+					$(fx.elem).css('background-image', '-webkit-linear-gradient(' + gradientSpecifier + ')');
+					$(fx.elem).css('background-image', '-moz-linear-gradient(' + gradientSpecifier + ')');
+					$(fx.elem).css('background-image', '-o-linear-gradient(' + gradientSpecifier + ')');
+					$(fx.elem).css('background-image', 'linear-gradient(' + gradientSpecifier + ')');
+				},
+				complete: function() {
+					
+					$this.css('percent', 0);
+					$.effects.restore($this, props);
+					
+					$this.dequeue();
+					
+					if (o.callback) {
+						o.callback.apply(this, arguments);
+					}
+				}
+			});
+		}
+	});
+};
+})(jQuery);
+
+function runEffect(elementID, easing, angle, stops) {
+$(elementID).effect('lineargradient', {
+times: 1,
+duration: 1000,
+easing: easing,
+angle: angle,
+stops: stops
+},function(){console.log("hey")});
+} 
+            $(document).ready(function(){ 
+    $("a").click(function(){
+            $("#box2").fadeToggle(100, "linear");   
+    });
+});  
+            
+        </script>
+           
+    </head>
+    <body>
+        <a href="#">Click to change gradient</a><br>
+<div align="center" style="width:200px; height:100px;">
+     <div style="width:200px; height:100px;" class="box1" id="box1">CONTENT BOTTOM DIV</div>
+     <div style="width:200px; height:100px; position:relative;" class="box2" id="box2">CONTENT TOP DIV</div>
+</div>
+    </body>
+</html>

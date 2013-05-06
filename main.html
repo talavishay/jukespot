@@ -1,0 +1,211 @@
+<!DOCTYPE html><html>    
+    <head>        <title>User</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<script  src="/misc/jquery.js?v=1.4.4" type="text/javascript"></script>
+<!--<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>-->
+
+<style type="text/css">
+*{
+    outline: none;
+}
+body {
+background-color: #000;direction:  rtl;text-align: right;margin: 0px;padding:0px;
+color: #fff;
+
+}
+h1,h2,h3,h4,p,span,div,a{
+   color: #000;
+}
+
+#container{
+    margin: 0 auto;display: block;position: relative;
+    
+
+}
+body.page .circle-container{
+    width: 100% !important;height: 100% !important;
+}
+.circle-container{
+    padding: 0px;margin: 0px;position: absolute;z-index: 10;
+}
+body.verti #logo_container{         
+    text-align: left;
+    width: 100%;
+    z-index: 1000;    
+}
+body.horiz #logo_container{
+    float: left;
+    margin-left: 5%;
+    top: 0px;
+}
+#logo{
+    left: 0px;
+    position: absolute;
+    font-size:50px;
+    background-image: url(/mimi_logo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    color:transparent;
+    max-height: 120px;
+    min-height: 100px;
+}
+body #logo,
+body #logo_container{
+   height: 90px;
+   max-height: 90px ;
+   width: 90px;
+}
+.circle{
+    border-radius:	100% !important;
+    -moz-border-radius:  100% !important;
+    -webkit-border-radius: 500px  !important;
+    background: none repeat scroll 0 0 #ffffff;
+    border-radius: 100% 100% 100% 100% !important;
+    float: right;
+    height: 90%;
+    margin: 5%;
+    width: 90%;
+    text-align: center;
+    vertical-align: middle !important;   
+    font-size: 300%;
+    cursor: pointer;
+    padding:5%''
+    
+}
+.circle.empty-a,
+.circle.empty-b{
+    cursor: default !important;
+}
+#a{
+    right: 0px;
+    top:0px;
+}
+#b{
+    left: 0px;
+    top:0px;
+}
+#c{
+    right: 0px;
+    bottom: 0px;
+}
+#d{
+    left: 0px;
+    bottom: 0px;
+}
+.content-primary {
+    float: none !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+}
+
+#toggle{
+    margin-bottom:50px;
+    color:white;
+    width:100px;
+    height:100px;
+    font-size:30px
+}
+.current{
+    z-index: 10;
+}
+
+
+.blue{
+    background-color: #33cccc;
+}
+.yellow{
+    background-color: #ffff00;
+}
+.pink{
+    background-color: #FF6699;
+}
+.circle > a{
+    display: block;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-shadow: 1px 1px 0 white;
+    font-family: arial;       
+}
+body.mono .current a {
+    font-weight: bold !important;
+}
+body.mono a,
+body.form .circle.form_request a,
+body.mono .circle.poll a.active {
+    padding-top: 0px !important;
+}
+body.mono .active a{
+    font-weight: bold !important;    
+}
+
+input#formMsgText {
+      display: block;
+    font-size: 154%;
+    height: 100px;
+    margin: 0 auto;
+        position: relative;
+    top: -100px;
+        color: #444;
+        z-index:0;
+}
+.webform-client-form{
+    display: none !important;
+}
+@-webkit-keyframes pulseScale{
+0%{        -webkit-transform: scale(1);         }
+5%{        -webkit-transform: scale(1.02);    }
+100%{        -webkit-transform: scale(1);         }
+}
+@-moz-keyframes pulseScale{
+0%{        -moz-transform: scale(1);         }
+5%{        -moz-transform: scale(1.02);    }
+100%{      -moz-transform: scale(1);         }
+}
+@-moz-keyframes rotating {
+0%{ -moz-transform: rotate(0deg);}
+40%{ -moz-transform: rotate(90deg);}
+50%{ -moz-transform: rotate(270deg);}
+100%{-moz-transform: rotate(360deg);}
+}
+@-webkit-keyframes rotating {
+0%{ -webkit-transform: rotate(0deg); }
+40%{ -webkit-transform: rotate(90deg);}
+50%{ -webkit-transform: rotate(270deg);}
+100%{-webkit-transform: rotate(360deg);}
+}
+.pulseScale,body.home .poll{
+-webkit-animation: pulseScale .5s linear  infinite;
+-moz-animation: pulseScale  .5s linear    infinite;
+}
+
+.rotate{
+-webkit-animation: rotating 2.5s linear  infinite;
+-moz-animation: rotating 2.5s linear    infinite;
+}
+
+</style>
+<script src="/sites/all/modules/mimi/mimi.js" type="text/javascript"></script>
+
+</head>
+<body class="multi">
+<div id="logo_container"><div id="logo">X</div></div>
+<div id="container" class="">
+<div class="circle-container " id="a">                <div class="circle blue form_request">
+        <a href="#" class="circle_link " id="circle_1">בקשה לשיר</a>
+</div>            </div>
+<div class="circle-container " id="b">                <div class="circle yellow ">
+        <a href="#" class="circle_link" id="circle_2"></a>
+</div>            </div>
+<div class="circle-container " id="c">                <div class="circle pink results">
+        <a href="#" class="circle_link" id="circle_3">תוצאות</a>
+</div>            </div>
+<div class="circle-container " id="d">                <div class="circle gray poll pulseScale">
+        <a href="#" class="circle_link poll_request" id="circle_4">השתתף בסקר</a>
+</div></div>
+</div>
+</body>
+</html>
