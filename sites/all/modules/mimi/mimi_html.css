@@ -1,0 +1,134 @@
+body {
+	background-color: #000;
+        direction:rtl;
+	text-align:right;
+        /*overflow: hidden;*/
+        margin: 0px;
+        padding:0px;
+        color: #fff;
+        
+}
+
+h1,h2,h3,h4,p,span,div,a{
+    color: #fff ;
+}
+/*.horiz{    background-color: #00f;}*/
+/*.verti{    background-color: #f00;}*/
+#container{
+    margin: 0 auto;
+    display: block;
+    position: relative;
+}
+body.page .circle-container{
+    width: 100% !important;
+    height: 100% !important;
+}
+.circle-container{
+    padding: 0px;
+    margin: 0px;
+    position: absolute;
+    z-index: 0;
+}
+body.verti #logo_container{         
+    text-align: left;
+    width: 100%;
+    z-index: 1000;    
+}
+/*body.verti #logo{         
+    left: 10%;
+    position: absolute;
+
+}*/
+body.horiz #logo_container{
+    position:absolute;
+    left: 5%;
+    top: 0px;
+    
+}
+#logo{
+    left: 10%;
+    position: absolute;
+    font-size:50px;
+    background-image: url(/mimi_logo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    color:transparent;
+     /*max-height: 50%;*/
+}
+.circle{
+    border-radius:	100% !important;
+    -moz-border-radius:  100% !important;
+    -webkit-border-radius: 500px  !important;
+    background: none repeat scroll 0 0 gray;
+    border-radius: 100% 100% 100% 100% !important;
+    float: right;
+    height: 90%;
+    margin: 5%;
+    width: 90%;
+    text-align: center;
+    vertical-align: middle !important;   
+    font-size: 300%;
+}
+#a{
+    right: 0px;
+    top:0px;
+}
+#b{
+    left: 0px;
+    top:0px;
+}
+#c{
+    right: 0px;
+    bottom: 0px;
+}
+#d{
+    left: 0px;
+    bottom: 0px;
+}
+.content-primary {
+    float: none !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+}
+
+#toggle{
+	margin-bottom:50px;
+	color:white;
+	width:100px;
+	height:100px;
+	font-size:30px
+}
+.current{
+    z-index: 10;
+    /*background: red;*/
+}
+
+.blue{
+    background-color: rgba(51,204,204,1);
+}
+.yellow{
+    background-color: rgba(255,241,0,1);
+}
+.pink{
+    background-color: rgb(235,0,139);
+}
+
+
+.circle > a{
+    display: block;
+    font-weight: bold;
+    text-decoration: none;
+    /*font-size: 2em;*/
+/*	height: 20%;
+    margin: 40% 5%;
+    overflow: hidden;
+    text-align: center;
+    width: 90%;*/
+}
+input{
+    color: #444;
+}
+
+.user {
+
+}

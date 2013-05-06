@@ -1,0 +1,93 @@
+
+#page, #main-wrapper{
+    background: none repeat scroll 0 0 #292929 !important;
+}
+
+#bar{
+    bottom: 0px;
+    height: 0px;
+    min-height: 30px;
+    position: fixed;
+    /*transform: rotate(0deg);*/
+    width: 100%;
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+}
+#bar .label{
+    white-space: nowrap;
+}
+.foreground{
+      background: none repeat scroll 0 0 red;
+    border-radius: 100% 100% 100% 100%;
+    float: left;
+    font-size: 360%;
+    text-align: center;
+        -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform-origin: center top 0;
+
+}
+.text,
+.bar,
+.percent {
+   display: none !important;
+    
+}
+form{
+    background-color: white;
+}
+.label{
+     position: relative;
+    top: 370px;
+    color :white;
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    
+}
+.poll{
+    /*display:none;*/
+    /*opacity: 0;*/
+}
+
+
+@-webkit-keyframes pulseScale{
+0%{        -webkit-transform: scale(0);         }
+5%{        -webkit-transform: scale(.4);    }
+100%{        -webkit-transform: scale(1);         }
+}
+
+
+.pulseScale,body.home .poll{
+-webkit-animation: pulseScale 2s linear;
+-moz-animation: pulseScale  2s normal ease-in-out;
+-moz-animation-fill-mode: forwards;
+}
+.pulseScaleA{
+-webkit-animation: pulseScale 1.5s linear;
+-moz-animation: pulseScale  1.5s normal ease-in-out;
+-moz-animation-fill-mode: forwards;
+}
+
+@-moz-keyframes minimize{
+0%{        -moz-transform: scale(1);         }
+50%{        -moz-transform: scale(.4);    }
+100%{      -moz-transform: scale(0.01);         }
+}
+
+.scaleUp{
+-webkit-animation: scaleUp 1s linear;
+-moz-animation: scaleUp 1s normal ease-in;
+-moz-animation-fill-mode: forwards;
+-moz-animation-delay: .5s;
+transform-origin: left top 0;
+}
+@-moz-keyframes scaleUp{
+0%{     -moz-transform: scale(0.01);}
+80%{     -moz-transform: scale(.9);}
+100%{   -moz-transform: scale(1);}
+}
+.minimize{
+-webkit-animation: minimize .5s linear;
+-moz-animation: minimize .5s normal ease-in;
+-moz-animation-fill-mode: forwards;
+}

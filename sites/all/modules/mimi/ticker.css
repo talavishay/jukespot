@@ -1,0 +1,77 @@
+#page-wrapper, #footer-wrapper,
+body,html,#main-wrapper,#page{
+    background-color: black !important;
+    color:white;
+    /*font-size: 1000%;*/
+}
+
+.view-display-id-ticker_page{
+/*    position: absolute;
+    top:0px;
+    left:0px;
+     min-height: 500px;*/
+}
+#breadcrumb, #page-title{
+    display: none;
+}
+body{
+    overflow: hidden;
+}
+
+.liScroll-container {
+    min-height: 270px;
+    margin: 0;
+    overflow: visible !important;
+    padding: 0;
+    /*transform: scale(5);*/
+    width: 738px;
+    position: fixed;
+    top:0px;
+    left:0px;
+
+}
+ul.liScroll{
+    margin-top: 0px !important;
+font-size: 30px !important;
+}
+a{
+    text-shadow: 0 0 2px black;  
+}
+#views-ticker-liScroll-sub{
+
+}
+.liScroll-container .mask {
+    overflow: visible !important;
+}
+ul.liScroll span {
+  display: inline-block;
+}
+.big {
+  display: list-item !important;
+  list-style: disc inside none;
+
+}
+.liScroll-container .mask {
+    left: 10px;
+    overflow: visible !important;
+    position: relative;
+    top: 8px;
+    width: 100%;
+}
+
+/*
+ul.liScroll span{
+    margin: 0px !important;
+}*/
+ul.liScroll li {
+  direction: rtl;
+/*  display: list-item;
+  list-style: disc inside none;*/
+ 
+ 
+}
+#views-ticker-liScroll-sub.update .big {
+  background-image: url("/sites/all/modules/views/images/loading-small.gif");
+  background-position: 98% 9px;
+  background-repeat: no-repeat;
+}

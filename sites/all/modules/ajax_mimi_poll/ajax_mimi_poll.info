@@ -1,0 +1,5 @@
+name = mimi ajax poll
+description = Enables voting on polls without reloading the page.
+core = 7.x
+dependencies[] = mimi_poll
+

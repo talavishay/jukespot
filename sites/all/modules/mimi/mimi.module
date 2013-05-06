@@ -1,0 +1,417 @@
+<?php
+function my_exec($cmd, $input=''){
+    $proc=proc_open($cmd, array(0=>array('pipe', 'r'), 1=>array('pipe', 'w'), 2=>array('pipe', 'w')), $pipes);
+    fwrite($pipes[0], $input);fclose($pipes[0]);
+    $stdout=stream_get_contents($pipes[1]);fclose($pipes[1]);
+    $stderr=stream_get_contents($pipes[2]);fclose($pipes[2]);
+    $rtn=proc_close($proc);
+    return array('stdout'=>$stdout,
+                 'stderr'=>$stderr,
+                 'return'=>$rtn
+                      );
+}
+function qr_response($json = true){    
+    $path = $_SERVER["DOCUMENT_ROOT"]."/".drupal_get_path("module", "mimi") . '/qr/';
+    $text = check_plain($_GET["text"]);
+    $hash = hash("md5", $text);
+    $filepath = $path.$hash.'.png';
+    $file = file($filepath);
+    if(!$file){
+        $cmd = 'qrencode --size 10 --margin 1  -o '.$filepath .' '.$text; 
+        $data = my_exec($cmd);
+    }
+    
+    $out = array("img"=> "/sites/all/modules/mimi/qr/".$hash.".png" ,"file"=> $file );
+    if($json){
+    echo json_encode($out );//, "cmd"=> $data
+echo '<img style="display: block;    margin: 0 auto;" src="/sites/all/modules/mimi/qr/'.$hash.'.png"/>';
+
+    } else {
+        return $out;
+    }
+}
+    
+function mimi_menu(){
+    
+  $items['node/%node/results/json'] = array(
+    'title' => 'Results',
+    'page callback' => 'mimi_poll_results_json',
+    'page arguments' => array(1),
+    'access callback' => true,
+    'weight' => 3,
+    'type' => MENU_CALLBACK,
+//    'file' => 'mimi_poll.pages.inc',
+  );
+  
+    $item["json_vote"] = array(
+        'page callback' => 'ajax_vote_response',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+//        'delivery callback' => 'ajax_deliver',
+    );
+        $item["qr"] = array(
+        'page callback' => 'qr_response',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+//        'delivery callback' => 'ajax_deliver',
+    );
+
+    $item["getForm"] = array(
+        'page callback' => 'ajax_form_response',
+'access callback' => TRUE,
+        
+        'type' => MENU_CALLBACK,
+//        'delivery callback' => 'ajax_deliver',
+    );
+    $item["send_form"] = array(
+        'page callback' => 'ajax_send_form',        
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+//        'delivery callback' => 'ajax_deliver',
+    );
+    $item["get_sub"] = array(
+        'page callback' => 'ajax_get_sub',
+        'access callback' => TRUE,
+        
+        'type' => MENU_CALLBACK,
+//        'delivery callback' => 'ajax_deliver',
+    );
+    $item["get_results"] = array(
+        'page callback' => 'ajax_get_results',
+        'access callback' => TRUE,
+        
+        'type' => MENU_CALLBACK,
+//        'delivery callback' => 'ajax_deliver',
+    );
+    
+        return $item;
+}
+
+function ajax_get_results(){
+    // retrive latest poll-node id 
+    $poll_resluts_json = views_get_view_result('poll_resluts', 'json');
+    $form_resluts_json = views_get_view_result('sub', 'ticker');
+    
+    
+//  $text = check_plain($_GET["node"]);
+    $node = node_load($poll_resluts_json[0]->nid);
+ // Make sure that choices are ordered by their weight.
+  uasort($node->choice, 'drupal_sort_weight');
+
+  // Count the votes and find the maximum.
+  $total_votes = 0;
+  $max_votes = 0;
+  foreach ($node->choice as $choice) {
+    if (isset($choice['chvotes'])) {
+      $total_votes += $choice['chvotes'];
+      $max_votes = max($max_votes, $choice['chvotes']);
+    }
+  }
+
+  
+$json = array();
+
+  foreach ($node->choice as $i => $choice) {
+    if (!empty($choice['chtext'])) {
+      $chvotes = isset($choice['chvotes']) ? $choice['chvotes'] : NULL;
+      $json['title'] = $choice['chtext'];
+        $json['votes'] = $chvotes;
+        $json['total_votes'] = $total_votes;
+
+         $json['percentage'] = round($chvotes * 100 / max($total_votes, 1));
+        
+        $data[] = $json;
+      
+    }
+  }
+ 
+  drupal_json_output( $data );
+    
+}
+
+
+
+
+
+
+function ajax_vote_response(){
+    $poll_block = mimi_poll_block_view();
+    unset($_SESSION['mimi_poll_vote']);
+    $out = array("choices"=> $poll_block["content"]["mimi_poll_view_voting"]["choice"]["#options"],
+                   "form" => array(
+                        "form_build_id" => $poll_block["content"]["mimi_poll_view_voting"]["#build_id"],
+                        "form_token" => $poll_block["content"]["mimi_poll_view_voting"]["form_token"]["#value"],
+                        "form_id" => $poll_block["content"]["mimi_poll_view_voting"]["#form_id"],
+                        "nid" => $poll_block["content"]["mimi_poll_view_voting"]["#node"]->nid,
+                        "op" => "Vote"
+                       ),
+        "session" => $_SESSION
+            );
+    echo json_encode($out);
+    //drupal_json_output($out);
+    
+            
+}
+function ajax_form_response(){    
+     $block = module_invoke('webform', 'block_view', 'client-block-34');
+     drupal_json_output( $block );           
+}
+function ajax_send_form($nid = 34){
+    module_load_include('inc', 'webform', 'includes/webform.submissions');
+    $node = node_load($nid);
+    global $user;
+    $data = array(
+        1 => array('value' => array(check_plain($_POST["msg"]))),
+    );
+
+  $submission = (object) array(
+    'nid' => $nid,
+    'uid' => $user->uid,
+    'submitted' => REQUEST_TIME,
+    'remote_addr' => ip_address(),
+    'is_draft' => FALSE,
+    'data' => $data,
+  );
+  webform_submission_insert($node, $submission);
+}
+function mimi_init(){
+    if(path_is_admin(current_path())){	
+            drupal_add_css('#admin-menu-wrapper {   direction: ltr;}  ', 'inline');
+            //~ drupal_add_css('#admin-menu-wrapper {  direction: ltr !important;}div{direction:rtl;text-align:right;} body.page-node-46 div,body.page-node-46 a,body.page-node-46 p{background-color: #000 !important;} body.page-node-46 a.ui-btn{border-radius:100% 100% 100% 100% !important;} .ui-btn-inner{border-color: rgba(0,0,0,0)}', 'inline');
+    }
+
+//	drupal_add_css(drupal_get_path('module', 'mimi') . '/mimi.css');	
+//	drupal_add_css(drupal_get_path('module', 'mimi') . '/jquery.countdown.css');
+//	drupal_add_js(drupal_get_path("module", "mimi"). '/jquery.countdown.min.js');
+    $arg = arg();
+    if(      count($arg) >= 3 ){
+        if($arg[2] === "results" || $arg[0] === "dj"){
+//            drupal_add_js(drupal_get_path("module", "mimi") . '/admin_poll_results.js');
+//            drupal_add_css(drupal_get_path("module", "mimi") . '/admin_poll_results.css');
+//            drupal_add_css(drupal_get_path("module", "mimi") . '/mimi.css');
+        }
+    }
+    if(drupal_is_front_page()){
+        drupal_add_css('.messages.error{display:none;}', array('type' => 'inline'));
+        
+    }
+    if($arg[0] === "ticker_page"){
+        
+        	drupal_add_css(drupal_get_path('module', 'mimi') . '/ticker.css');	
+                drupal_add_library("system", "ui");
+    }
+}
+function mimi_js_alter(&$js) {
+//dsm($js);
+}
+function mimi_css_alter(&$css) {
+	//~ dsm($css);
+  unset($css['sites/all/modules/admin_menu/admin_menu-rtl.css']);
+  unset($css['http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css']);
+
+}
+function mimi_views_pre_render(&$view) {
+    if( arg(0) === "vote" ){
+        $nid = $view->result[0]->nid;
+        $node = node_load($nid);
+        $created = $node->created;
+        $expiration = $created + intval($node->runtime);
+        $now = REQUEST_TIME;
+        $remaining = $expiration - $now;
+
+        if($remaining <= 0 ){
+            if($node->active == 1 ){
+                $node->active = 0;
+                node_save($node);
+            } 
+            drupal_goto("node/".$nid);
+        }
+    }
+    if ($view->name === 'poll_resluts'){    
+       drupal_add_js(drupal_get_path("module", "mimi") . '/admin_poll_results.js');
+       drupal_add_css(drupal_get_path("module", "mimi") . '/admin_poll_results.css');
+    }
+}
+       
+function mimi_preprocess_views_view_fields(&$vars) {
+
+    if ( $vars["view"]->name == "sub" ) {
+            $sid = (int) $vars["row"]->sid ;
+            $nid = (int) $vars["row"]->node_nid;
+                
+            $subm = mimi_webform_get_submissions_mimi(array("nid" => $nid,"sid" => $sid));
+            $s_text = $subm[$sid]->data;
+            $s_text = $s_text[1]["value"][0];
+            $vars["fields"]["sid_1"]->content = '<span class="big field-content">'.$s_text .'</span>';
+            $x=1;
+    }
+}           
+        
+function mimi_preprocess_node(&$node) {
+    if($node["type"] === "poll"){
+        $created = (int) $node["created"];
+        $type = isset($node["runtime"]) ;
+        if($type){
+           $expiration =$created + intval($node['runtime']);
+        } else {
+             $expiration =     REQUEST_TIME*1.2;
+            
+        }
+        
+        $now = REQUEST_TIME;
+        $remaining = $expiration - $now;
+        
+        drupal_add_js(array('time' => time(),'mimi' => array('created'=>$created ,'REQUEST_TIME' => REQUEST_TIME,'expiration' => $expiration ,'remaining' => $remaining,'nid'=> $node["nid"])), 'setting');
+        if($remaining  < 0){
+//            drupal_set_message("TIME UP ! NEW POLL WILL BE UP SOON . Please try agin");
+//            unset($node["field_timer"]);
+//            unset($node["node"]["field_timer"]);
+//            drupal_add_css(".field-name-field-timer{display: none}div{direction:rtl;text-align:right;}", "inline") ;
+//            drupal_add_js(drupal_get_path("module", "mimi"). '/timeup.js', array("scope" => "footer"));
+            
+            drupal_add_js(drupal_get_path("module", "mimi"). '/results.js', array("scope" => "footer"));
+        } else {
+//            drupal_set_message($remaining."sec to go !");
+            
+            drupal_add_js(drupal_get_path("module", "mimi"). '/timer.js', array("scope" => "footer"));
+            
+//            drupal_add_js('jQuery(document).on("pageload", function (){window.alert("xxx"); jQuery("div.field-name-field-timer").countdown({until: Drupal.settings.mimi.remaining, compact: true});})',  array('type' => 'inline', 'scope' => 'footer', 'weight' => 5) );
+//            drupal_add_js('jQuery(document).ready(function (){ jQuery("div.field-name-field-timer").countdown({until: Drupal.settings.mimi.remaining, compact: true});})',  array('type' => 'inline', 'scope' => 'footer', 'weight' => 5) );
+        }
+    }
+}
+/**
+ * Return all the submissions for a particular node.
+ *
+ * @param $filters
+ *   An array of filters to apply to this query. Usually in the format
+ *   array('nid' => $nid, 'uid' => $uid). A single integer may also be passed
+ *   in, which will be equivalent to specifying a $nid filter.
+ * @param $header
+ *   If the results of this fetch will be used in a sortable
+ *   table, pass the array header of the table.
+ * @param $pager_count
+ *   Optional. The number of submissions to include in the results.
+ */
+function mimi_webform_get_submissions_mimi($filters = array(), $header = NULL, $pager_count = 0) {
+  $submissions = array();
+
+  if (!is_array($filters)) {
+    $filters = array('nid' => $filters);
+  }
+
+  // UID filters need to be against a specific table.
+  if (isset($filters['uid'])) {
+    $filters['u.uid'] = $filters['uid'];
+    unset($filters['uid']);
+  }
+
+  // No need to find SIDs if it was given to us.
+  if (isset($filters['sid'])) {
+    $sids = array($filters['sid']);
+  }
+  // Build the list of SIDs that need to be retrieved.
+  else {
+    $pager_query = db_select('webform_submissions', 'ws')->fields('ws', array('sid'));
+    foreach ($filters as $column => $value) {
+      $pager_query->condition($column, $value);
+    }
+
+    if (isset($filters['u.uid']) || !empty($header)) {
+      // Join to the users table for sorting by user name.
+      $pager_query->leftJoin('users', 'u', 'u.uid = ws.uid');
+    }
+
+    if (isset($filters['u.uid']) && $filters['u.uid'] === 0) {
+      if (!empty($_SESSION['webform_submission'])) {
+        $anonymous_sids = array_keys($_SESSION['webform_submission']);
+        $pager_query->condition('sid', $anonymous_sids, 'IN');
+      }
+      else {
+        $pager_query->condition('sid', 0);
+      }
+    }
+
+    if (is_array($header)) {
+      // Extending the query instatiates a new query object.
+      $pager_query = $pager_query->extend('TableSort');
+      $pager_query->orderByHeader($header);
+    }
+    else {
+      $pager_query->orderBy('sid', 'ASC');
+    }
+
+    if ($pager_count) {
+      // Extending the query instatiates a new query object.
+      $pager_query = $pager_query->extend('PagerDefault');
+      $pager_query->limit($pager_count);
+    }
+    $result = $pager_query->execute();
+
+    $sids = array();
+    foreach ($result as $row) {
+      $sids[] = $row->sid;
+      $submissions[$row->sid] = FALSE;
+    }
+  }
+
+  // If there are no submissions being retrieved, return an empty array.
+  if (empty($sids)) {
+    return $submissions;
+  }
+
+  // Query the required submission data.
+  $query = db_select('webform_submitted_data', 'sd');
+  $query->leftJoin('webform_submissions', 's', 's.sid = sd.sid');
+  $query->leftJoin('users', 'u', 'u.uid = s.uid');
+  $query
+    ->fields('s')
+    ->fields('sd', array('cid', 'no', 'data'))
+    ->fields('u', array('name'))
+    ->condition('sd.sid', $sids, 'IN')
+    ->orderBy('sd.sid', 'ASC')
+    ->orderBy('sd.cid', 'ASC')
+    ->orderBy('sd.no', 'ASC');
+
+  // By adding the NID to this query we allow MySQL to use the primary key on
+  // in webform_submitted_data for sorting (nid_sid_cid_no).
+  if (isset($filters['nid'])) {
+    $query->condition('sd.nid', $filters['nid']);
+  }
+
+  $result = $query->execute();
+
+  // Convert the queried rows into submissions.
+  $previous = 0;
+  foreach ($result as $row) {
+    if ($row->sid != $previous) {
+      $submissions[$row->sid] = new stdClass();
+      $submissions[$row->sid]->sid = $row->sid;
+      $submissions[$row->sid]->nid = $row->nid;
+      $submissions[$row->sid]->submitted = $row->submitted;
+      $submissions[$row->sid]->remote_addr = $row->remote_addr;
+      $submissions[$row->sid]->uid = $row->uid;
+      $submissions[$row->sid]->name = $row->name;
+      $submissions[$row->sid]->is_draft = $row->is_draft;
+      $submissions[$row->sid]->data = array();
+    }
+    // CID may be NULL if this submission does not actually contain any data.
+    if ($row->cid) {
+      $submissions[$row->sid]->data[$row->cid]['value'][$row->no] = $row->data;
+    }
+    $previous = $row->sid;
+  }
+
+  foreach (module_implements('webform_submission_load') as $module) {
+    $function = $module . '_webform_submission_load';
+    $function($submissions);
+  }
+
+  return $submissions;
+}
+
+function ajax_get_sub(){
+    block_refresh_block_content("views","sub" );
+    //$refreshedBlock =views_get_view( "sub","block_1");
+//    echo theme ($refreshedBlock  );
+}

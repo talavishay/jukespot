@@ -1,0 +1,5 @@
+name = mimi-poll
+description = Allows your site to capture votes on different topics in the form of multiple choice questions.
+core = 7.x
+stylesheets[all][] = css/poll.css
+

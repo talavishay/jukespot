@@ -1,0 +1,49 @@
+body ,
+body div,
+body p{
+	/*background-color: #000 !important;*/
+} 
+.circle.ui-btn{
+    background: #c9de96;
+    border-radius:	100% !important;
+    -moz-border-radius:  100% !important;
+    -webkit-border-radius: 500px  !important;
+    box-shadow: 1px 1px 46px -5px yellow;
+} 
+.circle .ui-btn-inner {
+    display: block !important;
+    font-size: 300% !important;
+    overflow: hidden !important;
+    padding: 1.6em 25px!important;
+    position: relative !important;
+    text-overflow: ellipsis !important;
+    white-space: normal !important;
+    border-color: rgba(0,0,0,0)  !important;
+}
+
+.content-primary {
+    float: none !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+}
+
+.circle {
+    float: right;
+    height: 2em;
+    width: 2em;
+    vertical-align: top;
+/*
+    font-size: 17em;
+*/
+/*
+    line-height:17em;
+*/
+    
+}
+#toggle{
+	margin-bottom:50px;
+	color:white;
+	width:100px;
+	height:100px;
+	font-size:30px
+}

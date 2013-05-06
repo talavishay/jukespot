@@ -1,0 +1,3 @@
+name = mimi
+description = 'mimi customaztion'
+core = '7.x'
