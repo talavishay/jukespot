@@ -99,7 +99,7 @@ function home() {
     bindHomeEvents();
     mimi.timers = {};
     mimi.currentVote = {};
-    
+    jQuery(".circle a.poll_request").click();
 }
 function bindHomeEvents() {
     jQuery(".circle a.poll_request").bind("click.home", function(e) {
@@ -122,7 +122,7 @@ function bindHomeEvents() {
 function getPoll() {
     jQuery('.circle,.circle a').unbind("click");
     jQuery('.circle').removeClass("pulseScale ");
-    jQuery('#container').addClass("rotate");
+//    jQuery('#container').addClass("rotate");
     jQuery('body').addClass("poll").removeClass("form home");
     jQuery.getJSON("/json_vote", function(data) {
         var counter = 1;
@@ -156,7 +156,8 @@ function bindPollEvents() {
 }
 function sendVote(e) {
     if (typeof(mimi.poll) !== "undefined") {
-        jQuery("#container").addClass("rotate");
+        jQuery("#container");
+//        jQuery("#container").addClass("rotate");
         mimi.poll.ajax_url = '/mimi_poll/ajax/vote/' + mimi.poll.nid + '/0/0';
         mimi.poll.choice = jQuery("a", e.currentTarget).attr("choice");
         jQuery(".current a").fadeOut("fast");
@@ -166,7 +167,7 @@ function sendVote(e) {
             data: mimi.poll,
             success: function(data) {
                 var out = jQuery.parseJSON(data);
-                jQuery("#container").removeClass("rotate");
+//                jQuery("#container").removeClass("rotate");
                 jQuery(".current").bind("click.poll", function(){
                     
                 }); 
@@ -261,7 +262,7 @@ jQuery.ajax({
 }
 
 jQuery(document).ready(function() {
-    
+     
     if (mimi.page === "user") {
         mimi.mainHtml = jQuery("#container").html();
         home();
@@ -272,6 +273,7 @@ jQuery(document).ready(function() {
     
 home();
     scale();
+    
 });
 
 mimi = {};

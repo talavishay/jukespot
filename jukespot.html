@@ -11,9 +11,15 @@
     outline: none;
 }
 body {
-background-color: #000;direction:  rtl;text-align: right;margin: 0px;padding:0px;
-color: #fff;
-border:10px solid #00FFFF;
+  background: url("/bg.png") no-repeat scroll center bottom / cover black;
+    border: 10px solid #00FFFF;
+    color: #FFFFFF;
+    direction: rtl;
+    margin: 0;
+    max-height: 460px !important;
+    padding: 0;
+    text-align: right;
+     overflow: hidden;
 
 }
 h1,h2,h3,h4,p,span,div,a{
@@ -21,8 +27,13 @@ h1,h2,h3,h4,p,span,div,a{
 }
 
 #container{
-    margin: 0 auto;display: block;position: relative;
-    
+      display: block;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 145px !important;
+    position: relative;
+     overflow: hidden;
 
 }
 body.page .circle-container{
@@ -42,15 +53,11 @@ body.horiz #logo_container{
     top: 0px;
 }
 #logo{
-    left: 0px;
-    position: absolute;
-    font-size:50px;
-    background-image: url(/mimi_logo.png);
+      background-image: url("/jukespot-logo.png");
     background-repeat: no-repeat;
-    background-size: contain;
-    color:transparent;
-    max-height: 120px;
-    min-height: 100px;
+    left: 30px;
+    position: absolute;
+    top: 20px;
 }
 body #logo,
 body #logo_container{
@@ -99,7 +106,26 @@ body #logo_container{
     margin: 0 auto !important;
     width: 100% !important;
 }
-
+#bar {
+  border-color: rgba(255, 255, 255, 0.5);
+  border-image: none;
+  border-style: solid none;
+  border-width: 1px medium;
+  display: block;
+  height: 25px;
+  left: 0;
+  margin: 0 auto;
+  position: relative;
+  top: 89px;
+  width: 260px;
+}
+#top {
+  height: 115px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
 #toggle{
     margin-bottom:50px;
     color:white;
@@ -120,6 +146,9 @@ body #logo_container{
 }
 .pink{
     background-color: #FF6699;
+}
+.green{
+    background-color: #00ff00;
 }
 .circle > a{
     display: block;
@@ -192,6 +221,7 @@ input#formMsgText {
 
 </head>
 <body class="multi">
+<div id="top"><div id="logo"></div><div id="bar"></div></div>
 
 <div id="container" class="">
 <div class="circle-container " id="a">                <div class="circle blue form_request">
@@ -203,7 +233,7 @@ input#formMsgText {
 <div class="circle-container " id="c">                <div class="circle pink results">
         <a href="#" class="circle_link" id="circle_3">תוצאות</a>
 </div>            </div>
-<div class="circle-container " id="d">                <div class="circle gray poll pulseScale">
+<div class="circle-container " id="d">                <div class="circle green poll pulseScale">
         <a href="#" class="circle_link poll_request" id="circle_4">השתתף בסקר</a>
 </div></div>
 </div>
