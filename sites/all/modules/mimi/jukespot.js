@@ -140,11 +140,12 @@ function getPoll() {
 //    jQuery('#container').addClass("rotate");
     jQuery('body').addClass("poll").removeClass("form home");
     jQuery("#loading").show();
-    var loading = window.setInterval(function(){
+    mimi.timers.loading = window.setInterval(function(){
         jQuery("#loading").append(".");
     },500);
     jQuery.getJSON("/json_vote", function(data) {
         jQuery("#loading").hide().text("connect");
+        clearTimeout(mimi.timers.loading);
         var counter = 1;
         jQuery.each(data.choices, function(key, val) {
             jQuery("#circle_" + counter).parent(".circle").addClass("active");
