@@ -5,43 +5,59 @@
 <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 <script  src="/misc/jquery.js?v=1.4.4" type="text/javascript"></script>
 <!--<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>-->
-
 <style type="text/css">
+    @font-face {
+    font-family: 'Alef';
+    src: url('/sites/default/files/fonts/Alef-Regular.eot');
+    src: url('/sites/default/files/fonts/Alef-Regular.eot?#iefix') format('embedded-opentype'),
+         url('/sites/default/files/fonts/Alef-Regular.woff') format('woff'),
+         url('/sites/default/files/fonts/Alef-Regular.ttf') format('truetype'),
+         url('/sites/default/files/fonts/Alef-Regular.svg#alefregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 *{
     outline: none;
+    font-family: Alef;
 }
 html{
 background-color: black;
 
 }
 body {
- background-image: url("/bg.png"); 
-backround-repeat: no-repeat; 
-background-position: center bottom; 
-background-color: black;
-
+    background-color: black;
+    background-image: url("/bg.png");
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
     border: 10px solid #00FFFF;
     color: #FFFFFF;
     direction: rtl;
     margin: 0;
-    max-height: 460px !important;
+    overflow: hidden;
     padding: 0;
     text-align: right;
-     overflow: hidden;
-
+ max-height: 460px !important;
+    max-width: 320px;
+    margin: 0 auto;
+    position: relative;
 }
 h1,h2,h3,h4,p,span,div,a{
    color: #000;
 }
-
+/*.circle-container .circle {
+  background: none repeat scroll 0 0 transparent;
+  border: 10px solid;
+}*/
 #container{
       display: block;
     margin-bottom: 0;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 145px !important;
+    /*margin-top: 145px !important;*/
     position: relative;
      overflow: hidden;
+     
 
 }
 body.page .circle-container{
@@ -65,7 +81,7 @@ body.horiz #logo_container{
     background-repeat: no-repeat;
     left: 30px;
     position: absolute;
-    top: 20px;
+    top: 10px;
 }
 body #logo,
 body #logo_container{
@@ -88,6 +104,7 @@ body #logo_container{
     font-size: 300%;
     cursor: pointer;
     padding:5%;    
+      display: none;
 }
 .circle.empty-a,
 .circle.empty-b{
@@ -124,15 +141,36 @@ body #logo_container{
   left: 0;
   margin: 0 auto;
   position: relative;
-  top: 89px;
+  top: 79px;
   width: 260px;
 }
 #top {
   height: 115px;
   left: 0;
-  position: absolute;
+  position: relative;
   top: 0;
   width: 100%;
+}
+#bottom {
+      bottom: 5px;
+    color: white;
+    font-size: 27px;
+    letter-spacing: 1px;
+    line-height: 30px;
+    padding: 0 30px;
+    position: absolute;
+    text-align: center;
+    word-spacing: 4px;
+    display: none;
+}
+#bottom > span {
+  color: white;
+  display: block;
+  font-family: alef;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
 }
 #toggle{
     margin-bottom:50px;
@@ -159,13 +197,12 @@ body #logo_container{
     background-color: #00ff00;
 }
 .circle > a{
-    display: block;
+     display: block;
+    font-family: Alef,arial;
     font-weight: bold;
-    text-decoration: none;
-    padding: 10px 20px;
     text-align: center;
+    text-decoration: none;
     text-shadow: 1px 1px 0 white;
-    font-family: arial;       
 }
 body.mono .current a {
     font-weight: bold !important;
@@ -223,7 +260,15 @@ input#formMsgText {
 -webkit-animation: rotating 2.5s linear  infinite;
 -moz-animation: rotating 2.5s linear    infinite;
 }
-
+#container > div#loading {
+color: white;
+direction: ltr;
+font-size: 30px;
+font-weight: bold;
+margin-top: 120px;
+padding: 0 30px;
+text-align: left;
+}
 </style>
 <script src="/sites/all/modules/mimi/jukespot.js" type="text/javascript"></script>
 
@@ -231,19 +276,20 @@ input#formMsgText {
 <body class="multi">
 <div id="top"><div id="logo"></div><div id="bar"></div></div>
 
-<div id="container" class="">
+<div id="container" class=""><div id="loading">connect</div>
 <div class="circle-container " id="a">                <div class="circle blue form_request">
-        <a href="#" class="circle_link " id="circle_1">בקשה לשיר</a>
+        <a href="#" class="circle_link " id="circle_1"><span></span></a>
 </div>            </div>
 <div class="circle-container " id="b">                <div class="circle yellow ">
-        <a href="#" class="circle_link" id="circle_2"></a>
+        <a href="#" class="circle_link" id="circle_2"><span></span></a>
 </div>            </div>
 <div class="circle-container " id="c">                <div class="circle pink results">
-        <a href="#" class="circle_link" id="circle_3">תוצאות</a>
+        <a href="#" class="circle_link" id="circle_3"><span></span></a>
 </div>            </div>
 <div class="circle-container " id="d">                <div class="circle green poll pulseScale">
-        <a href="#" class="circle_link poll_request" id="circle_4">השתתף בסקר</a>
+        <a href="#" class="circle_link poll_request" id="circle_4"><span></span></a>
 </div></div>
 </div>
+<div id="bottom"><span>תודה שהצבעת!</span>עקבו אחר מסך הענק</div>
 </body>
 </html>

@@ -31,17 +31,27 @@ function monoCircle(e) {
     jQuery(e.currentTarget).parent(".circle-container").addClass("current");
     jQuery('.circle-container:not(.current)').fadeOut();
     jQuery(e.currentTarget).parent(".circle-container").animate({"width": "100%", "height": "100%", "opacity": 1}, function() {
+        
         var circleSize = jQuery(".circle", this).height();
         var fontSize = circleSize / 3;
         var marginTop = fontSize - (fontSize * 0.2);
-        jQuery("#formMsg,a", e.currentTarget).css({"margin-top": marginTop, "font-size": fontSize, "height": (fontSize * 1.05), "line-height": fontSize + "px"});
-        jQuery("a", e.currentTarget).fadeIn("fast");
+        var id = jQuery("a", e.currentTarget).css({"margin-top": marginTop, "font-size": 0, "height": (fontSize * 1.05), "line-height": fontSize + "px"}).attr("id");
+        
+        
+        jQuery("a", e.currentTarget).fadeIn("fast",function(){
+            fitTextInBox(id);
+           
+        });
+            
     });
 }
 function scale(e) {
-    var fullWidth = jQuery(window).width();
-    var fullHeight = window.innerHeight;
-    jQuery("body").css({"height":fullHeight });
+    var fullWidth = 320;
+     var fullHeight = 460;
+    fullWidth = jQuery(window).width() < 320 ? jQuery(window).width() : fullWidth;
+    fullHeight =  window.innerHeight < 460 ? window.innerHeight: fullHeight;
+   
+    jQuery("body").css({"min-height":fullHeight-20 });
     if (fullWidth > fullHeight) {
         jQuery("body").addClass("horiz").removeClass("verti");
         var size = fullHeight;
@@ -64,7 +74,8 @@ function scale(e) {
     size = (size / 100) * 75;
     var containter_margin_top  = (window.innerHeight-size ) / 2 ;
 
-    jQuery("#container").css({"width": size, "height": size, "margin-top": containter_margin_top  });//.text(fullWidth).css("font-size","50px");
+//    jQuery("#container").css({"width": size, "height": size, "margin-top": containter_margin_top  });//.text(fullWidth).css("font-size","50px");
+    jQuery("#container").css({"width": size, "height": size});//.text(fullWidth).css("font-size","50px");
     
     if (jQuery("body.multi").length === 1) {
         jQuery(".circle-container").css({"width": size / 2, "height": size / 2});
@@ -88,18 +99,22 @@ function scale(e) {
     
 }
 function home() {
+    jQuery()
+    jQuery("#bottom").hide();
     jQuery("body").removeClass("poll form").addClass("home");
     jQuery('.circle,.circle a').unbind(".poll, .form, .results");
-    jQuery("#container").removeClass("rotate").html(mimi.mainHtml);
+    jQuery("#container").html(mimi.mainHtml);
     jQuery(".webform-client-form").remove();jQuery("#form_input").remove();
 
     jQuery("body").addClass("multi home").removeClass("mono");
-    jQuery(".circle.poll");
+    jQuery(".circle").hide();
+    
     scale();
     bindHomeEvents();
     mimi.timers = {};
     mimi.currentVote = {};
     jQuery(".circle a.poll_request").click();
+    
 }
 function bindHomeEvents() {
     jQuery(".circle a.poll_request").bind("click.home", function(e) {
@@ -124,11 +139,20 @@ function getPoll() {
     jQuery('.circle').removeClass("pulseScale ");
 //    jQuery('#container').addClass("rotate");
     jQuery('body').addClass("poll").removeClass("form home");
+    jQuery("#loading").show();
+    var loading = window.setInterval(function(){
+        jQuery("#loading").append(".");
+    },500);
     jQuery.getJSON("/json_vote", function(data) {
+        jQuery("#loading").hide().text("connect");
         var counter = 1;
         jQuery.each(data.choices, function(key, val) {
             jQuery("#circle_" + counter).parent(".circle").addClass("active");
-            jQuery("#circle_" + counter).addClass("active").text(val).attr("choice", key);
+            jQuery("#circle_" + counter).addClass("active").attr("choice", key);
+//            jQuery("#circle_" + counter + " span").children("span").text(val);
+            jQuery("#circle_" + counter).append("<span>"+val+"</span>")
+                    jQuery("#circle_" + counter).parent(".circle").show();
+            
             counter++;
         });
         mimi.poll = data.form;
@@ -147,11 +171,7 @@ function bindPollEvents() {
         });
     mimi.currentVote = e.currentTarget;    
     sendVote(e);
-    monoCircle(e);
-    jQuery("a", mimi.currentVote).text("תודה!");
-    mimi.timers.pollThanks = setTimeout(function( ){
-        home();
-    }, 5000);
+    
     });
 }
 function sendVote(e) {
@@ -175,7 +195,14 @@ function sendVote(e) {
             },
             dataType: "html"
         });
-        jQuery('.circle,.circle a').unbind(".poll, .form, .results");        
+        jQuery('.circle,.circle a').unbind(".poll, .form, .results");       
+        monoCircle(e);
+        jQuery("#bottom").show();
+
+//    jQuery("a", mimi.currentVote).text("תודה!");
+        mimi.timers.pollThanks = setTimeout(function( ){
+            home();
+        }, 5000);
     }
 }
 function getPollResults() {
@@ -265,7 +292,7 @@ jQuery(document).ready(function() {
      
     if (mimi.page === "user") {
         mimi.mainHtml = jQuery("#container").html();
-        home();
+//        home();
     }
     jQuery("#logo").bind("click", function() {
         home();
@@ -305,3 +332,49 @@ window.addEventListener('load', function(e) {
 //
 //});
 setTimeout(function() {   scale();    }, 100);
+/************************************************************************************************************
+	(C) www.dhtmlgoodies.com, October 2005
+	
+	This is a script from www.dhtmlgoodies.com. You will find this and a lot of other scripts at our website.	
+	
+	Terms of use:
+	You are free to use this script as long as the copyright message is kept intact. However, you may not
+	redistribute, sell or repost it without our permission.
+	
+	Thank you!
+	
+	www.dhtmlgoodies.com
+	Alf Magne Kalleland
+	
+	************************************************************************************************************/	
+	var fitTextInBox_maxWidth = false;
+	var fitTextInBox_maxHeight = false;
+	var fitTextInBox_currentWidth = false;
+	var fitTextInBox_currentBox = false;
+	var fitTextInBox_currentTextObj = false;
+	function fitTextInBox(boxID,maxHeight)
+	{
+		if(maxHeight)fitTextInBox_maxHeight=maxHeight; else fitTextInBox_maxHeight = 10000;
+		var obj = document.getElementById(boxID);
+		fitTextInBox_maxWidth = obj.offsetWidth*0.8;	
+		fitTextInBox_currentBox = obj;
+		fitTextInBox_currentTextObj = obj.getElementsByTagName('SPAN')[0];
+		fitTextInBox_currentTextObj.style.fontSize = '1px';
+		fitTextInBox_currentWidth = fitTextInBox_currentTextObj.offsetWidth;
+		fitTextInBoxAutoFit();
+		
+	}	
+	
+	function fitTextInBoxAutoFit()
+	{
+		var tmpFontSize = fitTextInBox_currentTextObj.style.fontSize.replace('px','')/1;
+		fitTextInBox_currentTextObj.style.fontSize = tmpFontSize + 1 + 'px';
+		var tmpWidth = fitTextInBox_currentTextObj.offsetWidth;
+		var tmpHeight = fitTextInBox_currentTextObj.offsetHeight;
+		if(tmpWidth>=fitTextInBox_currentWidth && tmpWidth<fitTextInBox_maxWidth && tmpHeight<fitTextInBox_maxHeight && tmpFontSize<300){		
+			fitTextInBox_currentWidth = fitTextInBox_currentTextObj.offsetWidth;	
+			fitTextInBoxAutoFit();
+		}else{
+			fitTextInBox_currentTextObj.style.fontSize = fitTextInBox_currentTextObj.style.fontSize.replace('px','')/1 - 1 + 'px';
+		}		
+	}	
