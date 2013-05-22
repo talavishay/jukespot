@@ -439,5 +439,5 @@ function mimi_fboauth_action_connect($app_id, $access_token) {
   if($user->uid && $user->created == $user->login){
     drupal_goto("user/$user->uid/edit");
   }
-  drupal_goto('<front>');
+  drupal_goto('/node/62');
 }
