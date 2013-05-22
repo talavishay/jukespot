@@ -415,3 +415,29 @@ function ajax_get_sub(){
     //$refreshedBlock =views_get_view( "sub","block_1");
 //    echo theme ($refreshedBlock  );
 }
+/**
+* Implements hook_fboauth_actions_alter(): Customise redirect path
+*
+* @see hook_fboauth_actions_alter();
+*/
+function mimi_fboauth_actions_alter(&$actions) {
+  $actions['connect']['callback'] = '_bh_user_fboauth_action_connect';
+}
+
+/**
+* Callback for CUSTOM_MODULE_fboauth_actions_alter(): Customise redirect path
+*
+* @see hook_fboauth_actions_alter();
+*/
+function mimi_fboauth_action_connect($app_id, $access_token) {
+
+  // Call the default action first
+  fboauth_action_connect($app_id, $access_token);
+
+  global $user; //dpm($user);
+
+  if($user->uid && $user->created == $user->login){
+    drupal_goto("user/$user->uid/edit");
+  }
+  drupal_goto('<front>');
+}

@@ -107,8 +107,9 @@
 <? else:?>
 <? 
 //print sub_bartik_fboauth_action__connect();
-$link = fboauth_action_link_properties('connect');
-print l(t('Connect'), $link['href'], array('query' => $link['query']));
+//$link = fboauth_action_link_properties('connect', "http://jukespot.tk/start");
+//print l(t('Connect'), $link['href'], array('query' => $link['query']));
+print fboauth_action_display("connect");
 ?> 
 <?endif;?>
 </div>
