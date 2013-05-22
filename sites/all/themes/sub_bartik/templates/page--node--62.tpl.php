@@ -85,3 +85,31 @@
  * @see html.tpl.php
  */
 ?>
+
+<div id="top"><div id="logo"></div><div id="bar"></div></div>
+
+<div id="container" class="">
+<?php if($logged_in): ?>    
+    <div id="loading">connect</div>
+<div class="circle-container " id="a">                <div class="circle blue form_request">
+        <a href="#" class="circle_link " id="circle_1"><span></span></a>
+</div>            </div>
+<div class="circle-container " id="b">                <div class="circle yellow ">
+        <a href="#" class="circle_link" id="circle_2"><span></span></a>
+</div>            </div>
+<div class="circle-container " id="c">                <div class="circle pink results">
+        <a href="#" class="circle_link" id="circle_3"><span></span></a>
+</div>            </div>
+<div class="circle-container " id="d">                <div class="circle green poll pulseScale">
+        <a href="#" class="circle_link poll_request" id="circle_4"><span></span></a>
+</div></div>
+    
+<? else:?>
+<? 
+//print sub_bartik_fboauth_action__connect();
+$link = fboauth_action_link_properties('connect');
+print l(t('Connect'), $link['href'], array('query' => $link['query']));
+?> 
+<?endif;?>
+</div>
+<div id="bottom"><span>תודה שהצבעת!</span>עקבו אחר מסך הענק</div>

@@ -42,24 +42,51 @@
  *
  * @ingroup themeable
  */
+
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
   "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php print $language->language; ?>" version="XHTML+RDFa 1.0" dir="<?php print $language->dir; ?>"<?php print $rdf_namespaces; ?>>
 
 <head profile="<?php print $grddl_profile; ?>">
   <?php
-  print $head; 
+//  print $head; 
   ?>
   <title><?php print $head_title; ?></title>
-  <?php print $styles; ?>
+  <?php 
+  print $styles; 
+  ?>
   <?php print $scripts; ?>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<!--<script  src="/misc/jquery.js?v=1.4.4" type="text/javascript"></script>-->
+<!--<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>-->
+<style type="text/css">
+    @font-face {
+    font-family: 'Alef';
+    src: url('/sites/default/files/fonts/Alef-Regular.eot');
+    src: url('/sites/default/files/fonts/Alef-Regular.eot?#iefix') format('embedded-opentype'),
+         url('/sites/default/files/fonts/Alef-Regular.woff') format('woff'),
+         url('/sites/default/files/fonts/Alef-Regular.ttf') format('truetype'),
+         url('/sites/default/files/fonts/Alef-Regular.svg#alefregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+*{
+    outline: none;
+    font-family: Alef;
+}
+
+</style>
+
+<style media="all" type="text/css">
+    @import url("/sites/all/themes/sub_bartik/css/jukespot.css");
+    
+</style>
+<script src="/sites/all/modules/mimi/jukespot.js" type="text/javascript"></script>
+<link rel="text/css" type="text/css" media="all" src="/sites/all/themes/sub_bartik/jukespot.css"/>
 </head>
-<body class="XXXXXX <?php print $classes; ?>" <?php print $attributes;?>>
-  <div id="skip-link">
-    <a href="#main-content" class="element-invisible element-focusable"><?php print t('Skip to main content'); ?></a>
-  </div>
-  <?php print $page_top; ?>
-  <?php print $page; ?>
-  <?php print $page_bottom; ?>
+<body class="multi">
+<?php  print $page; ?>
 </body>
 </html>
