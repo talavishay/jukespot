@@ -84,9 +84,15 @@
  * @see bartik_process_page()
  * @see html.tpl.php
  */
+global $user;
 ?>
 
-<div id="top"><div id="logo"></div><div id="bar"></div></div>
+<div id="top"><div id="logo"></div><div id="bar">
+<?php if($logged_in){
+echo '<div id="username">שלום '.$user->name.'</div>';
+} ?>
+
+</div></div>
 
 <div id="container" class="">
 <?php if($logged_in): ?>    
