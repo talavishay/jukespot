@@ -1,0 +1,251 @@
+html{
+background-color: black;
+
+}
+body {
+    background-color: black;
+    background-image: url("/bg.png");
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 10px solid #00FFFF;
+    color: #FFFFFF;
+    direction: rtl;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    text-align: right;
+ max-height: 460px !important;
+    max-width: 320px;
+    margin: 0 auto;
+    position: relative;
+}
+h1,h2,h3,h4,p,span,div,a{
+   color: #000;
+}
+/*.circle-container .circle {
+  background: none repeat scroll 0 0 transparent;
+  border: 10px solid;
+}*/
+#container{
+      display: block;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    /*margin-top: 145px !important;*/
+    position: relative;
+     /*overflow: hidden;*/
+     
+
+}
+body.page .circle-container{
+    width: 100% !important;height: 100% !important;
+}
+.circle-container{
+    padding: 0px;margin: 0px;position: absolute;z-index: 10;
+}
+body.verti #logo_container{         
+    text-align: left;
+    width: 100%;
+    z-index: 1000;    
+}
+body.horiz #logo_container{
+    float: left;
+    margin-left: 5%;
+    top: 0px;
+}
+#logo{
+  background-image: url("/jukespot-logo.png");
+background-position: center bottom;
+background-repeat: no-repeat;
+height: 25px !important;
+left: 30px;
+overflow: hidden;
+position: absolute;
+top: 10px;
+padding :0px;
+float: none;
+}
+body #logo,
+body #logo_container{
+   height: 90px;
+   max-height: 90px ;
+   width: 90px;
+}
+.circle{
+    border-radius:	100% !important;
+    -moz-border-radius:  100% !important;
+    -webkit-border-radius: 500px  !important;
+    background: none repeat scroll 0 0 #ffffff;
+    border-radius: 100% 100% 100% 100% !important;
+    float: right;
+    height: 88%;
+    margin: 1%;
+    width: 88%;
+    text-align: center;
+    vertical-align: middle !important;   
+    font-size: 300%;
+    cursor: pointer;
+    padding:5%;    
+      display: none;
+}
+.circle.empty-a,
+.circle.empty-b{
+    cursor: default !important;
+}
+#a{
+    right: 0px;
+    top:0px;
+}
+#b{
+    left: 0px;
+    top:0px;
+}
+#c{
+    right: 0px;
+    bottom: 0px;
+}
+#d{
+    left: 0px;
+    bottom: 0px;
+}
+.content-primary {
+    float: none !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+}
+#bar {
+  border-color: rgba(255, 255, 255, 0.5);
+  border-image: none;
+  border-style: solid none;
+  border-width: 1px medium;
+  display: block;
+  height: 25px;
+  left: 0;
+  margin: 0 auto;
+  position: relative;
+  top: 12px;
+  width: 260px;
+}
+#top {
+  height: 65px;
+  left: 0;
+  position: relative;
+  top: 0;
+  width: 100%;
+}
+#bottom {
+     color: white;
+    font-size: 26px;
+    letter-spacing: 1px;
+    line-height: 30px;
+    text-align: center;
+    word-spacing: 0;
+display:none;
+}
+#bottom > span {
+  color: white;
+  display: block;
+  font-family: alef;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+}
+#toggle{
+    margin-bottom:50px;
+    color:white;
+    width:100px;
+    height:100px;
+    font-size:30px
+}
+.current{
+    z-index: 10;
+}
+
+
+.blue{
+    background-color: #33cccc;
+}
+.yellow{
+    background-color: #ffff00;
+}
+.pink{
+    background-color: #FF6699;
+}
+.green{
+    background-color: #00ff00;
+}
+.circle > a{
+     display: block;
+    font-family: Alef,arial;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 1px 1px 0 white;
+}
+body.mono .current a {
+    font-weight: bold !important;
+}
+body.mono a,
+body.form .circle.form_request a,
+body.mono .circle.poll a.active {
+    padding-top: 0px !important;
+}
+body.mono .active a{
+    font-weight: bold !important;    
+}
+
+input#formMsgText {
+      display: block;
+    font-size: 154%;
+    height: 100px;
+    margin: 0 auto;
+        position: relative;
+    top: -100px;
+        color: #444;
+        z-index:0;
+}
+.webform-client-form{
+    display: none !important;
+}
+@-webkit-keyframes pulseScale{
+0%{        -webkit-transform: scale(1);         }
+5%{        -webkit-transform: scale(1.02);    }
+100%{        -webkit-transform: scale(1);         }
+}
+@-moz-keyframes pulseScale{
+0%{        -moz-transform: scale(1);         }
+5%{        -moz-transform: scale(1.02);    }
+100%{      -moz-transform: scale(1);         }
+}
+@-moz-keyframes rotating {
+0%{ -moz-transform: rotate(0deg);}
+40%{ -moz-transform: rotate(90deg);}
+50%{ -moz-transform: rotate(270deg);}
+100%{-moz-transform: rotate(360deg);}
+}
+@-webkit-keyframes rotating {
+0%{ -webkit-transform: rotate(0deg); }
+40%{ -webkit-transform: rotate(90deg);}
+50%{ -webkit-transform: rotate(270deg);}
+100%{-webkit-transform: rotate(360deg);}
+}
+.pulseScale,body.home .poll{
+-webkit-animation: pulseScale .5s linear  infinite;
+-moz-animation: pulseScale  .5s linear    infinite;
+}
+
+.rotate{
+-webkit-animation: rotating 2.5s linear  infinite;
+-moz-animation: rotating 2.5s linear    infinite;
+}
+#container > div#loading {
+color: white;
+direction: ltr;
+font-size: 30px;
+font-weight: bold;
+margin-top: 120px;
+padding: 0 30px;
+text-align: left;
+}
