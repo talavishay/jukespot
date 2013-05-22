@@ -1,0 +1,86 @@
+body{
+/*font-size:165%;*/
+}
+#featured .views-exposed-widgets > div {
+    border: medium dotted;
+    display: inline-block !important;
+	float: right;
+}
+
+#views-exposed-form-test2-page .views-exposed-form .views-exposed-widget,
+#views-exposed-form-test2-page .views-exposed-form .views-exposed-widget .form-submit{
+    float: auto;
+    float: none;
+    padding: 10px;
+	margin:0px;
+}
+
+#views-exposed-form-test2-page .views-exposed-widget views-submit-button,
+form#views-exposed-form-test2-page div div.views-exposed-form div.views-exposed-widgets,
+#edit-search-api-views-fulltext-wrapper { 
+    padding: 0px !important;
+	margin:0px !important;
+}
+
+#featured {
+  padding: 20px 0px 0px;
+}
+/*
+*autocomplete
+*/
+.autocomplete-user-input {
+    background: yellow;
+}
+
+html.js input.form-autocomplete{
+	background-size: 31px auto;
+}
+html.js input.throbbing {
+    background-position: 100%  -35px !important;
+}
+/*html[xml-lang=he] */
+body.chrome input.throbbing {
+    background-position: 4px  -37px !important;
+}
+
+
+
+
+
+
+.facetapi-facetapi-checkbox-links li.leaf input.facetapi-checkbox{
+  -moz-transform: scale(2);
+  -webkit-transform: scale(2);
+}
+
+
+.facetapi-facetapi-checkbox-links li a{
+ margin: 0 5px;
+}
+.views-row {
+    border-bottom: 1px dashed gray ;
+    padding-bottom: 10px;
+}
+.block{
+
+background-color: rgba(0, 0, 255, 0.05);
+
+ border-radius: 10px 10px 10px 10px;	
+    box-shadow: 0 5px 25px -9px rgba(0,0,0,.8);
+
+}
+#content .block {
+    padding: 20px 40px;
+}
+
+/*
+laxo solr search 	inline fields - keywords ,quaktiative, etc ...
+*/
+.views-field-biblio-type, .views-field-field-biblio-research, .views-field-field-biblio-qualitive, .views-field-field-biblio-quantitive {
+  background: none repeat scroll 0 0 rgba(0, 90, 0, 0.06);
+  border: 2px solid teal;
+  border-radius: 7px 7px 7px 7px;
+  line-height: 31px;
+  margin: 0 !important;
+  padding: 3px 6px;
+}
