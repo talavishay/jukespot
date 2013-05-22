@@ -76,7 +76,15 @@
     outline: none;
     font-family: Alef;
 }
-
+body{
+    margin-top: 0px !important;
+}
+a.facebook-action-connect {
+  display: block !important;
+  margin: 206px auto 0;
+  transform: scale(1.6);
+  width: 89px;
+}
 </style>
 
 <style media="all" type="text/css">
