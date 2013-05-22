@@ -76,15 +76,23 @@
     outline: none;
     font-family: Alef;
 }
-body{
+body,
+body.admin-menu{
     margin-top: 0px !important;
 }
 a.facebook-action-connect {
-  display: block !important;
-  margin: 206px auto 0;
-  transform: scale(1.6);
-  width: 89px;
+background-image: url("/jukespot_login_logo.png");
+background-position: center top;
+background-repeat: no-repeat;
+display: block !important;
+height: 110px;
+margin: 106px auto 0;
+padding-top: 150px;
+text-align: center;
+transform: scale(1.1);
+width: 200px;
 }
+
 </style>
 
 <style media="all" type="text/css">

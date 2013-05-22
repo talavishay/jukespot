@@ -24,8 +24,8 @@ function sub_bartik_fboauth_action__connect($variables) {
   $link['attributes']['rel'] = 'nofollow';
   $attributes = isset($link['attributes']) ? drupal_attributes($link['attributes']) : '';
   $title = isset($link['title']) ? check_plain($link['title']) : '';
-  $src = ($GLOBALS['is_https'] ? 'https' : 'http') . '://www.facebook.com/images/fbconnect/login-buttons/connect_light_medium_short.gif';
-  return '<a ' . $attributes . ' href="' . $url . '"><img src="' . $src . '" alt="' . $title . '" /></a>';
+  $src = ($GLOBALS['is_https'] ? 'https' : 'http') . '://www.facebook.com/images/fbconnect/login-buttons/connect_light_large_long.gif';
+  return '<a ' . $attributes . ' href="' . $url . '"><img id="xxx" src="' . $src . '" alt="' . $title . '" /></a>';
 }
 
 /*

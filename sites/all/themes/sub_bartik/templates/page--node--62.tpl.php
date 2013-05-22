@@ -87,12 +87,12 @@
 global $user;
 ?>
 
+<?php if($logged_in):?>
 <div id="top"><div id="logo"></div><div id="bar">
-<?php if($logged_in){
-echo '<div id="username">שלום '.$user->name.'</div>';
-} ?>
+<div id="username">שלום <?php print $user->name?></div>
 
 </div></div>
+<?php endif; ?>
 
 <div id="container" class="">
 <?php if($logged_in): ?>    
