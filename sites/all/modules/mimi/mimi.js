@@ -137,7 +137,7 @@ function getPoll() {
 function bindPollEvents() {
     jQuery("body").addClass("poll").removeClass("form home");
     jQuery('.circle.active').bind("click.poll", function(e) {
-        jQuery(e.currentTarget).unbind("click.poll").bind("click.poll",function(){
+    jQuery(e.currentTarget).unbind("click.poll").bind("click.poll",function(){
             if(typeof(mimi.timers.pollThanks ) !== "undefined"){
                 clearTimeout(mimi.timers.pollThanks);
             }

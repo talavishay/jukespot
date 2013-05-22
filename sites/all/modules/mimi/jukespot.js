@@ -35,11 +35,11 @@ function monoCircle(e) {
         var circleSize = jQuery(".circle", this).height();
         var fontSize = circleSize / 3;
         var marginTop = fontSize - (fontSize * 0.2);
-        var id = jQuery("a", e.currentTarget).css({"margin-top": marginTop, "font-size": 0, "height": (fontSize * 1.05), "line-height": fontSize + "px"}).attr("id");
+        var id = jQuery("a", e.currentTarget).css({"margin-top": marginTop, "font-size": fontSize , "height": (fontSize * 1.05), "line-height": fontSize + "px"}).attr("id");
         
         
         jQuery("a", e.currentTarget).fadeIn("fast",function(){
-            fitTextInBox(id);
+//            fitTextInBox(id);
            
         });
             
@@ -99,7 +99,6 @@ function scale(e) {
     
 }
 function home() {
-    jQuery()
     jQuery("#bottom").hide();
     jQuery("body").removeClass("poll form").addClass("home");
     jQuery('.circle,.circle a').unbind(".poll, .form, .results");
@@ -151,8 +150,8 @@ function getPoll() {
             jQuery("#circle_" + counter).parent(".circle").addClass("active");
             jQuery("#circle_" + counter).addClass("active").attr("choice", key);
 //            jQuery("#circle_" + counter + " span").children("span").text(val);
-            jQuery("#circle_" + counter).append("<span>"+val+"</span>")
-                    jQuery("#circle_" + counter).parent(".circle").show();
+            jQuery("#circle_" + counter).append("<span>"+val+"</span>");
+                    jQuery("#circle_" + counter).removeClass("selected").parent(".circle").show().removeClass("selected");
             
             counter++;
         });
@@ -170,6 +169,11 @@ function bindPollEvents() {
             }
             home();
         });
+    var background_color = jQuery(e.currentTarget).css("background-color");
+    var parent = jQuery(e.currentTarget).parent(".circle");
+    jQuery(e.currentTarget).addClass("selected").css({"border-color": background_color, "background-color" : "transparent"}).find("span").css({"color": background_color });
+//    jQuery("body").css({"background-color": background_color });
+        jQuery(parent).addClass("selected");
     mimi.currentVote = e.currentTarget;    
     sendVote(e);
     
