@@ -88,9 +88,9 @@ global $user;
 ?>
 
 <?php if($logged_in):?>
-<div id="top"><div id="logo"></div><div id="bar">
+<div id="top"><div id="bar">
+<div id="logo"></div>
 <div id="username">שלום <?php print $user->name?></div>
-
 </div></div>
 <?php endif; ?>
 

@@ -76,7 +76,9 @@
     outline: none;
     font-family: Alef;
 }
+
 body,
+html body.admin-menu,
 body.admin-menu{
     margin-top: 0px !important;
 }

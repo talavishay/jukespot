@@ -46,7 +46,7 @@ function scale(e) {
         var size = fullHeight;
         var horizMargin = ((fullWidth - fullHeight) / 2);
         if(horizMargin > 150){
-            jQuery("#logo").css({"width": horizMargin, "height": horizMargin});
+//            jQuery("#logo").css({"width": horizMargin, "height": horizMargin});
             jQuery("#logo_container").css({"height": horizMargin});
         }
     }
@@ -55,7 +55,7 @@ function scale(e) {
         var size = fullWidth;
         var verticalMargin = (fullHeight - fullWidth) * 0.6;
         if(verticalMargin > 150){
-            jQuery("#logo").css({"width": verticalMargin, "height": verticalMargin});
+//            jQuery("#logo").css({"width": verticalMargin, "height": verticalMargin});
             jQuery("#logo_container").css({"height": verticalMargin});
         }
     }
