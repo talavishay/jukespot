@@ -116,7 +116,7 @@ echo '<div id="username">שלום '.$user->name.'</div>';
 //$link = fboauth_action_link_properties('connect', "http://jukespot.tk/start");
 //print l(t('Connect'), $link['href'], array('query' => $link['query']));
 //print fboauth_action_display("connect");
-print fboauth_action_display('connect');
+print fboauth_action_display('connect', 'http://jukespot.tk/start');
 ?> 
 <?endif;?>
 </div>
