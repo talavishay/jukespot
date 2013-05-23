@@ -1,4 +1,14 @@
-
+#admin-menu {
+    box-shadow: 0 -10px 20px 13px #000000;
+    direction: ltr !important;
+    font: small "Lucida Grande",Verdana,sans-serif;
+    right: 0;
+    width: auto;
+}
+span.word{
+    direction: ltr;
+        display: inline-block;
+}
 #bar > div {
     color: white;
 }
@@ -83,7 +93,7 @@ body.horiz #logo_container{
     width: 88%;
     text-align: center;
     vertical-align: middle !important;   
-    font-size: 300%;
+    /*font-size: 300%;*/
     cursor: pointer;
     padding:5%;    
       display: none;
@@ -186,7 +196,7 @@ display:none;
     font-weight: bold;
     text-align: center;
     text-decoration: none;
-    text-shadow: 1px 1px 0 white;
+    /*text-shadow: 1px 1px 0 white;*/
 }
 body.mono .current a {
     font-weight: bold !important;

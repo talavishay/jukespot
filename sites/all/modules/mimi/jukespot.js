@@ -20,28 +20,33 @@ function multiCircle(e) {
         var circleSize = jQuery(".circle", this).height();
         var fontSize = circleSize / 3;
         var marginTop = fontSize - (fontSize * 0.2);
-        jQuery("a", this).css({"margin-top": marginTop, "font-size": fontSize, "height": (fontSize * 1.05), "line-height": fontSize + "px"});
+//        jQuery("a", this).css({"margin-top": marginTop, "font-size": fontSize, "height": (fontSize * 1.05), "line-height": fontSize + "px"});
+        jQuery("a", this).css({"margin-top": marginTop, "font-size": fontSize,  "line-height": fontSize + "px"});
         jQuery(e.currentTarget).unbind("click.toggle").parent(".circle-container").removeClass("current");
     });
 }
 function monoCircle(e) {
-    console.log(e);
     jQuery("body").removeClass("multi").addClass("mono");
     jQuery(".circle a").hide();
-    jQuery(e.currentTarget).parent(".circle-container").addClass("current");
+    jQuery(e.currentTarget).css("width","82%").parent(".circle-container").addClass("current");
     jQuery('.circle-container:not(.current)').fadeOut();
     jQuery(e.currentTarget).parent(".circle-container").animate({"width": "100%", "height": "100%", "opacity": 1}, function() {
+         jQuery("#bottom").show();
+//        var circleSize = jQuery(".circle", this).height();
+//        var fontSize = circleSize / 3;
+//        var marginTop = fontSize - (fontSize * 0.2);
+//         jQuery("a", e.currentTarget).css({"line-height": "normal","height":"auto","padding-top":"0px","font-size":"inherit"});
         
-        var circleSize = jQuery(".circle", this).height();
-        var fontSize = circleSize / 3;
-        var marginTop = fontSize - (fontSize * 0.2);
-        var id = jQuery("a", e.currentTarget).css({"margin-top": marginTop, "font-size": fontSize , "height": (fontSize * 1.05), "line-height": fontSize + "px"}).attr("id");
-        
-        
-        jQuery("a", e.currentTarget).fadeIn("fast",function(){
-//            fitTextInBox(id);
-           
-        });
+        if(typeof(e) !== "undefined"){
+            jQuery("a", e.currentTarget).fadeIn("fast",function(){
+                    fitTextInBox(jQuery("a", e.currentTarget));
+                     var val = jQuery("a", e.currentTarget);
+                    var circleTextHeight = jQuery(val).height();
+                    var circleHeight = jQuery(val).parent().height();
+                    var circleMargin =circleHeight-circleTextHeight;
+                    jQuery(val).css("margin-top", circleMargin/2);
+            });
+        }
             
     });
 }
@@ -83,11 +88,22 @@ function scale(e) {
     var circleSize = jQuery(".circle:first-child").height();
     var fontSize = circleSize / 5;
     var marginTop = fontSize*1.5 ;
+//
+//    jQuery("a.circle_link:visible").each(function(i, val){
+//        fitTextInBox(val);
+//        var circleTextHeight = jQuery(val).height();
+//        var circleHeight = jQuery(val).parent().height();
+//        var circleMargin =circleHeight-circleTextHeight;
+//        jQuery(val).css("margin-top", circleMargin/2);
+//
+//    });
+    
 
-    jQuery("#formMsg,a.circle_link").css({"padding-top": marginTop,
-        "font-size": fontSize,
-        "height": (fontSize * 1.05),
-        "line-height": fontSize + "px"});
+//    jQuery("#formMsg,a.circle_link").css({"padding-top": marginTop,
+//        "font-size": fontSize,
+//        "height": (fontSize * 1.05),
+//        "line-height": fontSize + "px"}
+//);
 //    ##  TOPBAR - go away...
 //    scrollAmount = 20;
 //    var bodyHeight = jQuery("body").height(fullHeight+scrollAmount );
@@ -150,9 +166,13 @@ function getPoll() {
             jQuery("#circle_" + counter).parent(".circle").addClass("active");
             jQuery("#circle_" + counter).addClass("active").attr("choice", key);
 //            jQuery("#circle_" + counter + " span").children("span").text(val);
-            jQuery("#circle_" + counter).append("<span>"+val+"</span>");
-                    jQuery("#circle_" + counter).removeClass("selected").parent(".circle").show().removeClass("selected");
-            
+            jQuery("#circle_" + counter).append('<span class="word">'+val.replace(/ /i,'</span><br/><span class="word">')+'</span>');
+                    fitTextInBox(jQuery("#circle_" + counter).removeClass("selected").parent(".circle").show().removeClass("selected"));
+                    var val = jQuery("#circle_" + counter);
+                    var circleTextHeight = jQuery(val).height();
+                    var circleHeight = jQuery(val).parent().height();
+                    var circleMargin =circleHeight-circleTextHeight;
+                    jQuery(val).css("margin-top", circleMargin/2);
             counter++;
         });
         mimi.poll = data.form;
@@ -173,10 +193,10 @@ function bindPollEvents() {
     var parent = jQuery(e.currentTarget).parent(".circle");
     jQuery(e.currentTarget).addClass("selected").css({"border-color": background_color, "background-color" : "transparent"}).find("span").css({"color": background_color });
 //    jQuery("body").css({"background-color": background_color });
-        jQuery(parent).addClass("selected");
+    jQuery(parent).addClass("selected");
     mimi.currentVote = e.currentTarget;    
     sendVote(e);
-    
+    monoCircle(e);
     });
 }
 function sendVote(e) {
@@ -201,8 +221,8 @@ function sendVote(e) {
             dataType: "html"
         });
         jQuery('.circle,.circle a').unbind(".poll, .form, .results");       
-        monoCircle(e);
-        jQuery("#bottom").show();
+     
+       
 
 //    jQuery("a", mimi.currentVote).text("תודה!");
         mimi.timers.pollThanks = setTimeout(function( ){
@@ -352,34 +372,50 @@ setTimeout(function() {   scale();    }, 100);
 	Alf Magne Kalleland
 	
 	************************************************************************************************************/	
-	var fitTextInBox_maxWidth = false;
+	
+	function fitTextInBox(fitTextInBox_currentBox, maxHeight){
+            Drupal.fitTextInBox = {};
+            if(jQuery("a", fitTextInBox_currentBox).length === 1){
+                fitTextInBox_currentBox = jQuery("a", fitTextInBox_currentBox);
+            }
+// var fitTextInBox_maxWidth = false;//	var fitTextInBox_currentWidth = false;//	var fitTextInBox_currentBox = false;//	var fitTextInBox_currentTextObj = false;
 	var fitTextInBox_maxHeight = false;
-	var fitTextInBox_currentWidth = false;
-	var fitTextInBox_currentBox = false;
-	var fitTextInBox_currentTextObj = false;
-	function fitTextInBox(boxID,maxHeight)
-	{
-		if(maxHeight)fitTextInBox_maxHeight=maxHeight; else fitTextInBox_maxHeight = 10000;
-		var obj = document.getElementById(boxID);
-		fitTextInBox_maxWidth = obj.offsetWidth*0.8;	
-		fitTextInBox_currentBox = obj;
-		fitTextInBox_currentTextObj = obj.getElementsByTagName('SPAN')[0];
-		fitTextInBox_currentTextObj.style.fontSize = '1px';
-		fitTextInBox_currentWidth = fitTextInBox_currentTextObj.offsetWidth;
-		fitTextInBoxAutoFit();
-		
+        if(maxHeight){
+            fitTextInBox_maxHeight=maxHeight;
+        } else {
+            fitTextInBox_maxHeight = 10000;
+        }
+        
+//        var fitTextInBox_currentBox= jQuery("a", e.currentTarget);
+        Drupal.fitTextInBox.maxWidth = jQuery(fitTextInBox_currentBox).width()*0.8;	
+        Drupal.fitTextInBox.maxHeight = jQuery(fitTextInBox_currentBox).parents(".circle-container").height()*0.8;	
+        Drupal.fitTextInBox.TextObjects = jQuery("span", fitTextInBox_currentBox);
+        Drupal.fitTextInBox.wordCount = Drupal.fitTextInBox.TextObjects.length;
+        
+        jQuery(Drupal.fitTextInBox.TextObjects).each(function(key ,fitTextInBox_currentTextObj){
+            jQuery(fitTextInBox_currentTextObj).addClass("fix");
+                    //.css("font-size","1px");
+            var fitTextInBox_currentWidth = jQuery(fitTextInBox_currentTextObj).width();
+            if(typeof(fitTextInBox_currentTextObj)!== "undefined"){
+                Drupal.fitTextInBox.wordHeight = parseInt(Drupal.fitTextInBox.maxHeight) / parseInt(Drupal.fitTextInBox.wordCount);
+               fitTextInBoxAutoFit(fitTextInBox_currentTextObj, Drupal.fitTextInBox.maxWidth ,fitTextInBox_currentWidth );
+            };
+        });
 	}	
 	
-	function fitTextInBoxAutoFit()
-	{
-		var tmpFontSize = fitTextInBox_currentTextObj.style.fontSize.replace('px','')/1;
-		fitTextInBox_currentTextObj.style.fontSize = tmpFontSize + 1 + 'px';
-		var tmpWidth = fitTextInBox_currentTextObj.offsetWidth;
-		var tmpHeight = fitTextInBox_currentTextObj.offsetHeight;
-		if(tmpWidth>=fitTextInBox_currentWidth && tmpWidth<fitTextInBox_maxWidth && tmpHeight<fitTextInBox_maxHeight && tmpFontSize<300){		
-			fitTextInBox_currentWidth = fitTextInBox_currentTextObj.offsetWidth;	
-			fitTextInBoxAutoFit();
-		}else{
-			fitTextInBox_currentTextObj.style.fontSize = fitTextInBox_currentTextObj.style.fontSize.replace('px','')/1 - 1 + 'px';
-		}		
-	}	
+	function fitTextInBoxAutoFit(fitTextInBox_currentTextObj, fitTextInBox_maxWidth ,fitTextInBox_currentWidth, fitTextInBox_maxHeight,fitTextInBox_wordHeight  ){
+            	if(typeof(fitTextInBox_currentTextObj)!== "undefined"){
+                    var tmpFontSize = jQuery(fitTextInBox_currentTextObj).css("font-size").replace('px','')/1;
+                    var fontsize = tmpFontSize + 1 + 'px';
+                    jQuery(fitTextInBox_currentTextObj).css("font-size", fontsize);
+                    var tmpWidth = jQuery(fitTextInBox_currentTextObj).width();
+                    var tmpHeight  = jQuery(fitTextInBox_currentTextObj).height();
+                    if(tmpWidth>=fitTextInBox_currentWidth && tmpWidth<fitTextInBox_maxWidth && tmpHeight<Drupal.fitTextInBox.wordHeight  && tmpFontSize<300){		
+                            fitTextInBox_currentWidth = tmpWidth;	
+                           fitTextInBoxAutoFit(fitTextInBox_currentTextObj, fitTextInBox_maxWidth ,fitTextInBox_currentWidth, fitTextInBox_maxHeight);
+                    }else{
+                            var finalfontSize = fontsize.replace('px','')/1 - 1 + 'px';
+                            jQuery(fitTextInBox_currentTextObj).css("font-size", finalfontSize );
+                    }		
+                }
+        }
