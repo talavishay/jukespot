@@ -227,7 +227,7 @@ function sendVote(e) {
 //    jQuery("a", mimi.currentVote).text("תודה!");
         mimi.timers.pollThanks = setTimeout(function( ){
             home();
-        }, 5000);
+        }, 7000);
     }
 }
 function getPollResults() {
