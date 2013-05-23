@@ -30,6 +30,7 @@ function monoCircle(e) {
     jQuery(".circle a").hide();
     jQuery(e.currentTarget).css("width","82%").parent(".circle-container").addClass("current");
     jQuery('.circle-container:not(.current)').fadeOut();
+    
     jQuery(e.currentTarget).parent(".circle-container").animate({"width": "100%", "height": "100%", "opacity": 1}, function() {
          jQuery("#bottom").show();
 //        var circleSize = jQuery(".circle", this).height();
@@ -38,6 +39,7 @@ function monoCircle(e) {
 //         jQuery("a", e.currentTarget).css({"line-height": "normal","height":"auto","padding-top":"0px","font-size":"inherit"});
         
         if(typeof(e) !== "undefined"){
+            jQuery("a", e.currentTarget).css("opacity", 0);
             jQuery("a", e.currentTarget).fadeIn("fast",function(){
                     fitTextInBox(jQuery("a", e.currentTarget));
                      var val = jQuery("a", e.currentTarget);
@@ -45,6 +47,7 @@ function monoCircle(e) {
                     var circleHeight = jQuery(val).parent().height();
                     var circleMargin =circleHeight-circleTextHeight;
                     jQuery(val).css("margin-top", circleMargin/2);
+                    jQuery("a", e.currentTarget).css("opacity", 1);
             });
         }
             
@@ -191,12 +194,13 @@ function bindPollEvents() {
         });
     var background_color = jQuery(e.currentTarget).css("background-color");
     var parent = jQuery(e.currentTarget).parent(".circle");
-    jQuery(e.currentTarget).addClass("selected").css({"border-color": background_color, "background-color" : "transparent"}).find("span").css({"color": background_color });
+   
 //    jQuery("body").css({"background-color": background_color });
     jQuery(parent).addClass("selected");
     mimi.currentVote = e.currentTarget;    
     sendVote(e);
     monoCircle(e);
+     jQuery(e.currentTarget).addClass("selected").css({"border-color": background_color, "background-color" : "transparent"}).find("span").css({"color": background_color });
     });
 }
 function sendVote(e) {
