@@ -83,11 +83,11 @@ function scale(e) {
     jQuery("#container").css({"width": size, "height": size});//.text(fullWidth).css("font-size","50px");
     
     if (jQuery("body.multi").length === 1) {
-        jQuery(".circle-container").css({"width": size / 2, "height": size / 2});
+        jQuery(".circle-container").css({"width": size / 2.05, "height": size / 2.05});
     }
-    var circleSize = jQuery(".circle:first-child").height();
-    var fontSize = circleSize / 5;
-    var marginTop = fontSize*1.5 ;
+//    var circleSize = jQuery(".circle:first-child").height();
+//    var fontSize = circleSize / 5;
+//    var marginTop = fontSize*1.5 ;
 //
 //    jQuery("a.circle_link:visible").each(function(i, val){
 //        fitTextInBox(val);
