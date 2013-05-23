@@ -11,7 +11,7 @@ window.addEventListener(orientationEvent, function(e) {
     }, 400);
 }, false);
 
-function multiCircle(e) {
+function multiCircle(e){
     jQuery("body").addClass("multi").remove("mono");
     jQuery('.circle-container').fadeIn();
     jQuery(".current a").css("color", "transparent");
@@ -26,11 +26,12 @@ function multiCircle(e) {
     });
 }
 function monoCircle(e) {
+    
     jQuery("body").removeClass("multi").addClass("mono");
     jQuery(".circle a").hide();
     jQuery(e.currentTarget).css("width","82%").parent(".circle-container").addClass("current");
     jQuery('.circle-container:not(.current)').fadeOut();
-    
+    scale("mono");
     jQuery(e.currentTarget).parent(".circle-container").animate({"width": "100%", "height": "100%", "opacity": 1}, function() {
          jQuery("#bottom").show();
 //        var circleSize = jQuery(".circle", this).height();
@@ -53,7 +54,7 @@ function monoCircle(e) {
             
     });
 }
-function scale(e) {
+function scale(mono) {
     var fullWidth = 320;
      var fullHeight = 460;
     fullWidth = jQuery(window).width() < 320 ? jQuery(window).width() : fullWidth;
@@ -80,6 +81,9 @@ function scale(e) {
     }
     //scale down container for the logo
     size = (size / 100) * 75;
+    if(mono === "mono"){
+        size = (size / 100) * 70;
+    }
     var containter_margin_top  = (window.innerHeight-size ) / 2 ;
 
 //    jQuery("#container").css({"width": size, "height": size, "margin-top": containter_margin_top  });//.text(fullWidth).css("font-size","50px");
