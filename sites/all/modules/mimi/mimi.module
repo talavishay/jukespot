@@ -124,7 +124,8 @@ $json = array();
       
     }
   }
- 
+        $data["time"] = intval($node->changed);
+        $data["runtime"] = intval($node->runtime);
   drupal_json_output( $data );
     
 }
