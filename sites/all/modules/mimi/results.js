@@ -3,7 +3,7 @@ jQuery(document).ready(function(){
     scale("mono");
     mimi = {};
 mimi.color = new Array("#33cccc","#ffff00","#FF6699","#00ff00");
-mimi.counter = 1;
+mimi.counter = 10;
     start();    
 //window.setInterval(function(){
 //    refresh();    
