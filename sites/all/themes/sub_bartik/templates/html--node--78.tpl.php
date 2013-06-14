@@ -341,11 +341,12 @@ animation-delay:0;
     top: 100px;
     width: 90vw;
     margin-left: 5vw;
+    direction: rtl;
 }
 
 #countdown > div {
-    float: right;
-    margin-left: 5vw;
+    display: inline;
+margin-right: 15px;
 }
 .kkc-godz-text,
 .kkc-godz{
