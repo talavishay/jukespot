@@ -5,31 +5,35 @@ jQuery(document).ready(function(){
 mimi.color = new Array("#33cccc","#ffff00","#FF6699","#00ff00");
 mimi.counter = 10;
 //mimi.counter = 1;
-    start();    
+    refreshData();    
 //window.setInterval(function(){
 //    refresh();    
 //},7000);
 
 });
-function start(){
+function refreshData(){
     jQuery(".content").html("");
     jQuery.ajax({
         type: "GET",
         url: '/get_results' ,
         ifModified : true,
         beforeSend: function(){        },
-        complete: function(){        },
+        complete: function(){      
+            if(mimi.timeup){
+                refresh();
+            } else {
+                countdown();
+            };
+            },
         success: function(data){
-                    
-                    mimi.runtime = data.runtime;
-                    mimi.time = data.time;
-                    mimi.deadline = mimi.time +mimi.runtime ;
-                    delete data.time;
-                    delete data.runtime;
-                    mimi.respondData = data;
-                     var dataArray = new Array();
+                mimi.runtime = data.runtime;
+                mimi.time = data.time;
+                mimi.deadline = mimi.time +mimi.runtime ;
+                delete data.time;
+                delete data.runtime;
+                mimi.respondData = data;
+                var dataArray = new Array();
                 jQuery.each(data,function(key, val){
-                   
                     dataArray.push(val.votes);
                 });
                 mimi.winner = Math.max.apply(Math, dataArray); // 306
@@ -41,8 +45,6 @@ function start(){
                     };
                 });
                 });
-countdown();
-//refresh();
         },
         dataType: "json"
     });
@@ -165,9 +167,13 @@ function countdown(){
         secondsText : '',
         displayZeroDays : false,
         oneDayClass : 'one-day',
-        callback: refresh
+        callback: contdownOver
     });
 };
+function contdownOver(){
+mimi.timeup =true;    
+    refreshData();
+}
 function dream(){
 
 var color = Math.round(0xffffff * Math.random()).toString(16);
