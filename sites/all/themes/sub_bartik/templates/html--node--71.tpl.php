@@ -334,13 +334,15 @@ animation-delay:0;
 
 /*  circle  -- ENd  */
 #countdown {
-    color: rgb(51, 204, 204); 
-    position: fixed;
-    top: 100px;
-    text-align: center;
-    width: 90%;
-    font-size: 50vh;
-       font-weight: 900;
+    color: #33CCCC;
+font-size: 35vh;
+font-weight: 900;
+left: 5vw;
+margin: 0 auto !important;
+position: fixed;
+text-align: center;
+top: 100px;
+width: 90vw;
 }
 .kkc-godz-text,
 .kkc-godz{
