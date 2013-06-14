@@ -1,6 +1,6 @@
 
 jQuery(document).ready(function(){
-    scale("mono");
+//    scale("mono");
     mimi = {};
 mimi.color = new Array("#33cccc","#ffff00","#FF6699","#00ff00");
 mimi.counter = 10;
@@ -53,15 +53,19 @@ function refresh(){
             arrayOfData1 = new Array();
             mimi.data = new Array();
             var i =0;
-            
+            var teko = 0;
             jQuery.each(data,function(key, val){
+//                if(val.percentage === 0 ){val.percentage = 1};
+//                if(teko === val.percentage ){val.percentage += 1};
                 arrayOfData1.push([1, val.title, mimi.color[i]]);            
                 mimi.data.push([val.percentage, val.title, mimi.color[i]]);            
-                
+                teko = val.percentage ;
                 i++;
             });
-            jQuery('.content').jqBarGraph({  data: arrayOfData1 ,colors: mimi.color ,sort:false,speed:0.1, width:jQuery(window).width()-100,height:220});
-            jQuery('.content').append(jQuery('<div id="counter"><span>The<br/>Winner<br/>Is</span></div>'));
+            jQuery('.content').jqBarGraph({  data: arrayOfData1 ,colors: mimi.color ,sort:false,speed:0.1, width:jQuery(window).width()-100,height: jQuery(window).height()*0.2});
+            jQuery('.graphValue').remove();
+            
+            jQuery('#logo').after(jQuery('<div id="counter"><span>The<br/>Winner<br/>Is</span></div>'));
              window.setTimeout(function(){
             jQuery('#couner span').remove();
 
@@ -70,21 +74,55 @@ function refresh(){
                 jQuery("#counter").text(mimi.counter);
                 if(mimi.counter === 0){
                     jQuery(".content").html("");
+                    jQuery("#counter").remove();
                     mimi.timer2 = window.setTimeout(function(){
-                        jQuery(".content").html("");
+                        jQuery(".content").html("").attr("style","");
                         jQuery(".circle-container").css({"width":"100%","height":"100%"}).show();
-                        jQuery(".circle a").append('<span class="word">'+mimi.winner.title.replace(/ /i,'</span><br/><span class="word">')+'</span>').show();
-                        jQuery(".circle").css({"border-color":mimi.winner.color}).show().children("a").css({ "display": "block", "width": "100%","color":mimi.winner.color}).show();
-                        fitTextInBox(jQuery(".circle a"));
-                        jQuery(".fix").not(".word").remove();
-                        var circleTextHeight = jQuery('.circle a').height();
-                        var circleHeight = jQuery('.circle a').parent().height();
-                        var circleMargin =circleHeight-circleTextHeight;
-                        jQuery('.circle a').css("margin-top", circleMargin/2);
-                        var circleTextHeight = jQuery('#container').height();
-                        var circleHeight = jQuery(window).height();
-                        var circleMargin =circleHeight-circleTextHeight;
-                        jQuery('#container').css("top", circleMargin*0.5);
+                        var word_count = mimi.winner.title.split(' ').length;
+                        if(word_count == 1){
+                            if(mimi.winner.title.length <= 4){
+                                font_size = (50/word_count)/2;
+                                margin_top = font_size /4;
+                            } else {
+                                font_size  =15;
+                                margin_top = 9;
+                            }
+                            line_height = (50/word_count)/2;
+                            if(mimi.winner.title.length <= 3){
+                                font_size = 22;
+                                margin_top = 8.25;
+                            }
+                        } ;
+                        if(word_count == 2){
+                            font_size = 15;
+                            line_height = 14.5;
+                            margin_top = 4;
+                        } ;
+                        if(word_count == 3){
+                            font_size = 14;
+                            line_height = 12.5;
+                            margin_top = 1;
+                        } ;
+                        jQuery(".circle").css({"border-color":mimi.winner.color}).show().children("a").css({
+                            "display": "block",
+                            "width": "100%",
+                            "margin-top" : margin_top+"vh" ,
+                            "color":mimi.winner.color, 
+                            "font-size": font_size+"vh",
+                            "line-height": line_height+"vh" }).text(mimi.winner.title).show();
+                        
+                            
+                        
+//                        fitTextInBox(jQuery(".circle a"));
+//                        jQuery(".fix").not(".word").remove();
+//                        var circleTextHeight = jQuery('.circle a').height();
+//                        var circleHeight = jQuery('.circle a').parent().height();
+//                        var circleMargin =circleHeight-circleTextHeight;
+//                        jQuery('.circle a').css("margin-top", circleMargin/2);
+//                        var circleTextHeight = jQuery('#container').height();
+//                        var circleHeight = jQuery(window).height();
+//                        var circleMargin =circleHeight-circleTextHeight;
+//                        jQuery('#container').css("top", circleMargin*0.5);
                         jQuery(".circle").css({
                             "animation-delay":"0", "animation-duration": ".5s", "animation-iteration-count": "12",    "animation-name": "pulseScale"  });
                     },4500);
@@ -94,7 +132,7 @@ function refresh(){
                                                 sort:false,
                                                 speed:4.5, 
                                                 width:jQuery(window).width()-100,
-                                                height:window.innerHeight-100
+                                                height:window.innerHeight-200
                     });
                     delete mimi.data;
                     clearInterval(mimi.timer);
@@ -110,7 +148,7 @@ function refresh(){
 //                },3000);
 }
 function countdown(){
-    jQuery('.content').prepend(jQuery('<div id="countdown"><div id="time_left_text">הזמן הנותר להצבעה</div><div class="kkcount-down" data-time="'+mimi.deadline+'"></div></div>'));
+    jQuery('#logo').after(jQuery('<div id="countdown"><div id="time_left_text">הזמן הנותר להצבעה</div><div class="kkcount-down" data-time="'+mimi.deadline+'"></div></div>'));
     jQuery(".kkcount-down").kkcountdown({
         dayText : 'day ',
         daysText : 'days ',
@@ -222,7 +260,7 @@ function scale(mono) {
         var size = fullHeight;
         var horizMargin = ((fullWidth - fullHeight) / 2);
         if(horizMargin > 150){
-            jQuery("#logo").css({"width": horizMargin, "height": horizMargin});
+    
             jQuery("#logo_container").css({"height": horizMargin});
         }
     }
@@ -231,7 +269,7 @@ function scale(mono) {
         var size = fullWidth;
         var verticalMargin = (fullHeight - fullWidth) * 0.6;
         if(verticalMargin > 150){
-            jQuery("#logo").css({"width": verticalMargin, "height": verticalMargin});
+          
             jQuery("#logo_container").css({"height": verticalMargin});
         }
     }

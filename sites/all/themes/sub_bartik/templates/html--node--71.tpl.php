@@ -48,6 +48,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php print $language->language; ?>" version="XHTML+RDFa 1.0" dir="<?php print $language->dir; ?>"<?php print $rdf_namespaces; ?>>
 
 <head profile="<?php print $grddl_profile; ?>">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <?php
 //  print $head; 
   ?>
@@ -57,8 +58,8 @@
   ?>
   <?php print $scripts; ?>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+
 <!--<script  src="/misc/jquery.js?v=1.4.4" type="text/javascript"></script>-->
 <!--<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>-->
 <style type="text/css">
@@ -94,22 +95,42 @@ body.admin-menu{
     background-color: black;
     color: white;
     background-image: url("/bg_pepole.jpg");
+    margin: 0px !important;
+    padding: 0px !important;
+    overflow: hidden;
+     text-align: center;
 }
 
 .graphLabel {
      border-top: 5px solid black;
-    position: relative;
+    /*position: relative;*/
     color: black;
-    top: -120px;
+    /*top: -120px;*/
     width: 100%;
-    padding-bottom: 50px;
-    font-size:30px;
+    /*padding-bottom: 50px;*/
+    font-size:3vh;
+}
+#graphLabel0 {
+    background-color: #33CCCC;
+}
+#graphLabel1 {
+    background-color: #ffff00;
+}
+#graphLabel2 {
+    background-color: #FF6699;
+}
+#graphLabel3 {
+    background-color: #00ff00;
+}
+#block-system-main{
+        position: fixed !important;
+        bottom: 0px;
+           width: 100vw;
 }
 .content{
-        margin-left: 50px;
-        position: fixed !important;
-        bottom: -100px;
+    margin: 0 auto;
 }
+
 .graphValue:after{
     content: "%";
 }
@@ -132,34 +153,34 @@ body.admin-menu{
     color: #00ff00;
 }*/
 #counter {
-    font-size: 493px;
+     color: #33CCCC;
+    display: inline-block;
+    font-family: avgardm;
+    font-size: 50vh;
+    line-height: 60vh;
     font-weight: 900;
     letter-spacing: -45px;
-    position: absolute;
+    position: static;
     text-align: center;
-    top: -680px;
     width: 100%;
-    color: rgb(51, 204, 204); 
-    font-family: avgardm;
+    
 }
 
 #counter span {
-    display: block;
-    font-size: 123px;
+       display: block;
+    font-size: 15vh;
     letter-spacing: normal;
-    line-height: 110px;
-    position: relative;
-    top:250px;
+    line-height: 15vh;
 }
 #logo{
-       background: url("/jukespot-logo.png") no-repeat scroll center center transparent;
+             background: url("/jukespot-logo.png") no-repeat scroll center center / contain transparent;
     border-bottom: 1px solid;
     border-top: 1px solid white;
-    display: block;
-    height: auto !important;
-    margin: 10px 5%;
+    height: 5vh;
+    margin: 4vh 5vw;
     top: 0;
-    width: 90% !important;
+    width: 90vw !important;
+     padding: 0;
 }
 /*dream effect -- START*/
 .drawingpix	{ 
@@ -268,6 +289,9 @@ text-align:center;
     padding:5%;    
       display: none;
 }
+.circle a{
+    font-weight: bold;
+}
 body.page .circle-container{
     width: 100% !important;height: 100% !important;
 }
@@ -275,12 +299,11 @@ body.page .circle-container{
     padding: 0px;margin: 0px;position: absolute;z-index: 10;
 }
 #container {
- display: block;
-margin-bottom: 15px;
-margin-left: auto;
-margin-right: auto;
-position: relative;
-top: 70px;
+    display: inline-block;
+    height: 50vh;
+    position: relative;
+    width: 50vh;
+        top: 15vh;
 }
 span.word {
     font-weight: 900;
@@ -316,7 +339,7 @@ animation-delay:0;
     top: 100px;
     text-align: center;
     width: 90%;
-    font-size: 200px;
+    font-size: 50vh;
        font-weight: 900;
 }
 .kkc-godz-text,
@@ -335,9 +358,12 @@ animation-delay:0;
 
 <link rel="text/css" type="text/css" media="all" src="/sites/all/themes/sub_bartik/jukespot.css"/>
 <!--<script type="text/javascript" src="/sites/all/modules/mimi/mimi.js" type="text/javascript"></script>-->
+
     <script type="text/javascript" src="/sites/all/modules/mimi/results.js" type="text/javascript"></script>
     <script type="text/javascript" src="/sites/all/modules/mimi/jqBarGraph.1.1.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="/sites/all/modules/mimi/kkcountdown.js" type="text/javascript"></script>
+    <!--<script type="text/javascript" src="/sites/all/modules/mimi/jquery.fittext.js" type="text/javascript"></script>-->
+    <!--<script type="text/javascript" src="/sites/all/modules/mimi/bigtext.js" type="text/javascript"></script>-->
 </head>
 <body class="multi">
     <div id="logo"></div>

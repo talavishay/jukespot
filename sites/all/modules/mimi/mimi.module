@@ -204,6 +204,9 @@ function mimi_init(){
 }
 function mimi_js_alter(&$js) {
 //dsm($js);
+   if($_GET["q"]== "node/71"){
+        unset($js['misc/jquery.js']);
+   }
 }
 function mimi_css_alter(&$css) {
 	//~ dsm($css);
