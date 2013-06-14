@@ -156,7 +156,7 @@ body.admin-menu{
      color: #33CCCC;
     display: inline-block;
     font-family: avgardm;
-    font-size: 50vh;
+    font-size: 5vh;
     line-height: 60vh;
     font-weight: 900;
     letter-spacing: -45px;
@@ -334,20 +334,24 @@ animation-delay:0;
 
 /*  circle  -- ENd  */
 #countdown {
-    color: rgb(51, 204, 204); 
-    position: fixed;
-    top: 100px;
+      color: #33CCCC;
+    font-size: 5vh;
+    font-weight: 900;
     text-align: center;
-    width: 90%;
-    font-size: 50vh;
-       font-weight: 900;
+    top: 100px;
+    width: 90vw;
+}
+
+#countdown > div {
+    float: right;
+    margin-left: 5vw;
 }
 .kkc-godz-text,
 .kkc-godz{
     display:none;
 }
 #time_left_text{
-    font-size: 60px ;
+    font-size: 5vh ;
        font-weight: 900;
 }
 .kkcount-down * {
@@ -359,7 +363,7 @@ animation-delay:0;
 <link rel="text/css" type="text/css" media="all" src="/sites/all/themes/sub_bartik/jukespot.css"/>
 <!--<script type="text/javascript" src="/sites/all/modules/mimi/mimi.js" type="text/javascript"></script>-->
 
-    <script type="text/javascript" src="/sites/all/modules/mimi/results.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/sites/all/modules/mimi/dj-results.js" type="text/javascript"></script>
     <script type="text/javascript" src="/sites/all/modules/mimi/jqBarGraph.1.1.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="/sites/all/modules/mimi/kkcountdown.js" type="text/javascript"></script>
     <!--<script type="text/javascript" src="/sites/all/modules/mimi/jquery.fittext.js" type="text/javascript"></script>-->
@@ -367,12 +371,7 @@ animation-delay:0;
 </head>
 <body class="multi">
     <div id="logo"></div>
-    <div id="container" class="">
-    
-    <div class="circle-container " id="a">                <div class="circle ">
-            <a href="#" class="circle_link " id="circle_1"><span></span></a>
-    </div>            </div>
-</div>
+<div id="countdown"><div id="time_left_text">הזמן הנותר להצבעה</div><div class="kkcount-down" data-time="'+mimi.deadline+'"></div></div>
 <?php  print $page; ?>
 </body>
 </html>

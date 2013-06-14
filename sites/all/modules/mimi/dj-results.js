@@ -6,9 +6,10 @@ mimi.color = new Array("#33cccc","#ffff00","#FF6699","#00ff00");
 //mimi.counter = 10;
 mimi.counter = 1;
     start();    
-//window.setInterval(function(){
-//    refresh();    
-//},7000);
+window.setInterval(function(){
+    //refresh();    
+    start();    
+},10000);
 
 });
 function start(){
@@ -20,7 +21,7 @@ function start(){
         beforeSend: function(){        },
         complete: function(){        },
         success: function(data){
-                    
+                    jQuery(".content").html("");
                     mimi.runtime = data.runtime;
                     mimi.time = data.time;
                     mimi.deadline = mimi.time +mimi.runtime ;
@@ -41,122 +42,37 @@ function start(){
                     };
                 });
                 });
+                
 countdown();
-//refresh();
+refresh();
         },
         dataType: "json"
     });
     
 };
 function refresh(){
-    jQuery("#countdown").remove();
             var data = mimi.respondData;
-            arrayOfData1 = new Array();
             mimi.data = new Array();
             var i =0;
             var teko = 0;
             jQuery.each(data,function(key, val){
-//                if(val.percentage === 0 ){val.percentage = 1};
-//                if(teko === val.percentage ){val.percentage += 1};
-                arrayOfData1.push([1, val.title, mimi.color[i]]);            
                 mimi.data.push([val.percentage, val.title, mimi.color[i]]);            
-                teko = val.percentage ;
                 i++;
             });
-            jQuery('.content').jqBarGraph({  data: arrayOfData1 ,colors: mimi.color ,sort:false,speed:0.1, width:jQuery(window).width()-100,height: jQuery(window).height()*0.2});
-            jQuery('.graphValue').remove();
-            
-            jQuery('#logo').after(jQuery('<div id="counter"><span>The<br/>Winner<br/>Is</span></div>'));
-             window.setTimeout(function(){
-            jQuery('#couner span').remove();
-
-            mimi.timer = window.setInterval(function(){
-
-                jQuery("#counter").text(mimi.counter);
-                if(mimi.counter === 0){
-                    jQuery(".content").html("");
-                    jQuery("#counter").remove();
-                    mimi.timer2 = window.setTimeout(function(){
-                        jQuery(".content").html("").attr("style","");
-                        jQuery(".circle-container").css({"width":"100%","height":"100%"}).show();
-                        var word_count = mimi.winner.title.split(' ').length;
-                        var font_size = 9;
-                        var margin_top = 13;
-                        var line_height = 14.5;
-                        if(word_count == 1){
-                            if(mimi.winner.title.length <= 8){
-                                font_size = 9;
-                                margin_top = 8;
-                            } 
-                            if(mimi.winner.title.length <= 6){
-                                font_size = 12;
-                                margin_top = 8;
-                            } 
-                            if(mimi.winner.title.length <= 4){
-                                font_size = 18;
-                                margin_top = 14;
-                            } 
-                            
-                            if(mimi.winner.title.length <= 3){
-                                font_size = 22;
-                                margin_top = 8.25;
-                            }
-                        } ;
-                        if(word_count == 2){
-                            font_size = 15;
-                            margin_top = 4;
-                        } ;
-                        if(word_count == 3){
-                            font_size = 14;
-                            line_height = 12.5;
-                            margin_top = 1;
-                        } ;
-                        jQuery(".circle").css({"border-color":mimi.winner.color}).show().children("a").css({
-                            "display": "block",
-                            "width": "100%",
-                            "margin-top" : margin_top+"vh" ,
-                            "color":mimi.winner.color, 
-                            "font-size": font_size+"vh",
-                            "line-height": line_height+"vh" }).text(mimi.winner.title).show();
-                        
-                            
-                        
-//                        fitTextInBox(jQuery(".circle a"));
-//                        jQuery(".fix").not(".word").remove();
-//                        var circleTextHeight = jQuery('.circle a').height();
-//                        var circleHeight = jQuery('.circle a').parent().height();
-//                        var circleMargin =circleHeight-circleTextHeight;
-//                        jQuery('.circle a').css("margin-top", circleMargin/2);
-//                        var circleTextHeight = jQuery('#container').height();
-//                        var circleHeight = jQuery(window).height();
-//                        var circleMargin =circleHeight-circleTextHeight;
-//                        jQuery('#container').css("top", circleMargin*0.5);
-                        jQuery(".circle").css({
-                            "animation-delay":"0", "animation-duration": ".5s", "animation-iteration-count": "12",    "animation-name": "pulseScale"  });
-                    },4500);
-                    jQuery('.content').jqBarGraph({
-                                                data: mimi.data, 
-                                                colors: mimi.color, 
-                                                sort:false,
-                                                speed:4.5, 
-                                                width:jQuery(window).width()-100,
-                                                height:window.innerHeight-200
-                    });
-                    delete mimi.data;
-                    clearInterval(mimi.timer);
-                }
-                mimi.counter = mimi.counter -1;
-            },1000);
-            delete arrayOfData1 ;
-            }, 2000);
-
-            
-//                window.setTimeout(function(){
-//    //                        dream();
-//                },3000);
+            jQuery(".content").html("");
+            jQuery('.content').jqBarGraph({
+                                        data: mimi.data, 
+                                        colors: mimi.color, 
+                                        sort:false,
+                                        speed:4.5, 
+                                        width:jQuery(window).width()-100,
+                                        height:window.innerHeight-200
+            });
+            delete mimi.data;
 }
 function countdown(){
-    jQuery('#logo').after(jQuery('<div id="countdown"><div id="time_left_text">הזמן הנותר להצבעה</div><div class="kkcount-down" data-time="'+mimi.deadline+'"></div></div>'));
+    jQuery(".kkcount-down").remove();
+    jQuery("#countdown").append(jQuery('<div class="kkcount-down" ></div>').attr("data-time",mimi.deadline));
     jQuery(".kkcount-down").kkcountdown({
         dayText : 'day ',
         daysText : 'days ',
@@ -165,9 +81,13 @@ function countdown(){
         secondsText : '',
         displayZeroDays : false,
         oneDayClass : 'one-day',
-        callback: refresh
+        callback: timeup
     });
 };
+function timeup(){
+    jQuery(".kkcount-down").remove();
+    jQuery("#countdown").text("הזמן נגמר!");
+}
 function dream(){
 
 var color = Math.round(0xffffff * Math.random()).toString(16);
