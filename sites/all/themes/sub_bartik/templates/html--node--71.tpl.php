@@ -108,7 +108,7 @@ body.admin-menu{
     /*top: -120px;*/
     width: 100%;
     /*padding-bottom: 50px;*/
-    font-size:3vh;
+    font-size:4vh;
 }
 #graphLabel0 {
     background-color: #33CCCC;

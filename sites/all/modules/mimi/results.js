@@ -81,8 +81,8 @@ function refresh(){
                         var word_count = mimi.winner.title.split(' ').length;
                         if(word_count == 1){
                             if(mimi.winner.title.length <= 4){
-                                font_size = (50/word_count)/2;
-                                margin_top = font_size /4;
+                                font_size = 18;
+                                margin_top = 6.25;
                             } else {
                                 font_size  =15;
                                 margin_top = 9;
