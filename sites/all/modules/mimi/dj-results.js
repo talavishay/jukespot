@@ -86,7 +86,7 @@ function countdown(){
 };
 function timeup(){
     jQuery(".kkcount-down").remove();
-    jQuery("#countdown").text("הזמן נגמר!");
+    jQuery("#countdown").text("הזמן נגמר");
 }
 function dream(){
 
