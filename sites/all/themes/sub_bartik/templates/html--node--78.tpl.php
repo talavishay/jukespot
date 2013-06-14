@@ -340,6 +340,7 @@ animation-delay:0;
     text-align: center;
     top: 100px;
     width: 90vw;
+    margin-left: 5vw;
 }
 
 #countdown > div {
